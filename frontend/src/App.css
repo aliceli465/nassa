@@ -87,14 +87,15 @@ button {
   transition: background-color 0.2s ease;
 }
 
-.InfoButton {
+.info {
   background-color: #59378f; /* Electric purple */
   color: #ffffff; /* White text */
   border: none;
-  padding: 5px 5px;
+  width: 5px;
+  height: 5px;
   border-radius: 5px;
   font-family: "Orbitron", sans-serif;
-  font-size: 5px;
+  font-size: 1px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }

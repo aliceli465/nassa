@@ -18,7 +18,7 @@ function Sidebar() {
     <div className="sidebar">
       <h2>Orbit Settings</h2>
       <div className="control">
-        <label htmlFor="radius">Orbital Radius (AU) &nbsp;<InfoButton> test </InfoButton>&nbsp; </label>
+        <label htmlFor="radius">Orbital Radius (AU) <InfoButton> test </InfoButton> </label>
         <input
           type="range"
           id="radius"
@@ -104,7 +104,7 @@ function Sidebar() {
       </div>
 
       <div className="control">
-        <label htmlFor="temp">Temperature (Celsius)</label>
+        <label htmlFor="temp">Temperature (Kelvin)</label>
         <input
           type="range"
           id="temp"

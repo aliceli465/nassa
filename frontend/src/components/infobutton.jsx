@@ -1,6 +1,6 @@
 export default function InfoButton({children, ... attributes}) {
     return (
-        <button type = "button" {...attributes} className = "info">
+        <button type = "info" {...attributes} className = "info">
             {children}
         </button>
     );
