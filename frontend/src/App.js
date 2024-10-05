@@ -9,6 +9,9 @@ import sunImage from "./assets/sun.jpg";
 import planetImage from "./assets/planet.jpg";
 import normalImage from "./assets/normal.jpg";
 import spaceImage from "./assets/space2.jpg";
+import Sun from "./components/Sun";
+import Planet from "./components/Planet";
+import Orbit from "./components/Orbit";
 
 import Sidebar from "./components/sidebar";
 import PlanetSidebar from "./components/planetSidebar";
@@ -36,13 +39,13 @@ function App() {
   };
 
   useEffect(() => {
-    if (!mountRef.current) return; // Ensure the ref is defined
-
+    
     const currentMount = mountRef.current;
+    if (!currentMount) return;
 
     // Set up the scene, camera, and renderer
     const scene = new THREE.Scene();
-    scene.background = null;
+    scene.background = null; //make background transparent
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
@@ -54,12 +57,14 @@ function App() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     currentMount.appendChild(renderer.domElement);
+    camera.position.setZ(30);
 
     //Panning
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enablePan = true;
     controls.panSpeed = 1;
     controls.screenSpacePanning = false;
+
 
     // Light source
     const pointLight = new THREE.PointLight(0xffffff, 1000);
@@ -71,8 +76,8 @@ function App() {
     //const gridHelper = new THREE.GridHelper();
     //scene.add(gridHelper);
 
-    //Sun
-    // Replace the moon code with the sun code
+    //Create components 
+    /*
     const sunTexture = new THREE.TextureLoader().load(sunImage);
     const normalTexture = new THREE.TextureLoader().load(normalImage);
     const sunMaterial = new THREE.MeshBasicMaterial({
@@ -81,87 +86,32 @@ function App() {
       emissive: 0xffff00, // Glow
       emissiveIntensity: 1, //Glow intensity
     });
-
-    // Create the sun mesh
-    const sun = new THREE.Mesh(
-      new THREE.SphereGeometry(5, 32, 32), // Increase the size for a more sun-like appearance
-      sunMaterial
-    );
-    scene.add(sun);
+    */
+    const sun = Sun();
+    const planet = Planet({ radius: 1 });
+    const orbit = Orbit({ semiMajorAxis: 15, semiMinorAxis: 10 });
 
     // Add a point light for glowing effect
     const sunLight = new THREE.PointLight(0xffff00, 2, 100); // Yellow light, intensity 2
     sunLight.position.set(0, 0, 0); // Position it at the center of the sun
     scene.add(sunLight);
 
-    /*
-    // Add stars
-    function addStar() {
-      const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-      const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
-      const star = new THREE.Mesh(geometry, material);
-
-      const [x, y, z] = Array(3)
-        .fill()
-        .map(() => THREE.MathUtils.randFloatSpread(100));
-      star.position.set(x, y, z);
-      scene.add(star);
-    }
-    Array(200).fill().forEach(addStar);
-    */
-
-    // Planet
-    const planetTexture = new THREE.TextureLoader().load(planetImage);
-    const planetMaterial = new THREE.MeshBasicMaterial({ map: planetTexture });
-    const planet = new THREE.Mesh(
-      new THREE.SphereGeometry(1, 32, 32),
-      planetMaterial
-    ); // Size of the planet
+    scene.add(sun);
     scene.add(planet);
-
-    // Define the semi-major and semi-minor axes for the orbit
-    const semiMajorAxis = 15; // Changeable radius in the x direction
-    const semiMinorAxis = 10; // Changeable radius in the y direction
-
-    // Create the orbit path as an ellipse centered on the sun
-    const ellipsePoints = [];
-    const numPoints = 100; // Number of points for the ellipse
-    for (let i = 0; i <= numPoints; i++) {
-      const theta = (i / numPoints) * Math.PI * 2; // Angle for each point
-      const x = semiMajorAxis * Math.cos(theta);
-      const y = semiMinorAxis * Math.sin(theta);
-      ellipsePoints.push(new THREE.Vector3(x, y, 0)); // Z remains constant
-    }
-
-    const ellipseGeometry = new THREE.BufferGeometry().setFromPoints(
-      ellipsePoints
-    );
-    const ellipseMaterial = new THREE.LineBasicMaterial({
-      color: 0xffffff,
-      linewidth: 2,
-    });
-    const ellipsePath = new THREE.LineLoop(ellipseGeometry, ellipseMaterial); // Create a loop for the ellipse
-    scene.add(ellipsePath); // Add the orbit path to the scene
+    scene.add(orbit);
 
     // Position the camera
     camera.position.setZ(30);
 
-    // Set scene background
-    //const spaceTexture = new THREE.TextureLoader().load(spaceImage);
-    //scene.background = spaceTexture;
-
     // Animation loop
     function animate() {
       requestAnimationFrame(animate);
-
       angle.current += 0.01;
 
       // Calculate the new position of the planet based on the elliptical orbit
-      const x = semiMajorAxis * Math.cos(angle.current);
-      const y = semiMinorAxis * Math.sin(angle.current);
+      const x = 15 * Math.cos(angle.current);
+      const y = 10 * Math.sin(angle.current);
       planet.position.set(x, y, 0);
-      sun.rotation.y += 0.01;
-
       //controls.update();
       renderer.render(scene, camera);
     }
