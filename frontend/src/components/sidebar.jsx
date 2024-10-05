@@ -57,7 +57,7 @@ function Sidebar({ orbit, sun, handleOrbitChange, handleSunChange }) {
         <input
           type="range"
           id="speed"
-          min="100"
+          min="10"
           max="5000"
           value={orbit.orbitSpeed}
           name="orbitSpeed"

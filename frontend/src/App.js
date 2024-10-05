@@ -116,7 +116,7 @@ function App() {
         currentMount.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -130,7 +130,7 @@ function App() {
     const { name, value } = e.target;
     let change = 0;
     if (name == "orbitSpeed") {
-      change = orbit.orbitSpeed - value;
+      change = value - orbit.orbitSpeed;
     }
     setOrbit({
       ...orbit,
@@ -138,7 +138,8 @@ function App() {
     });
 
     if (change != 0) {
-      angleChange += 0.1;
+      angleChange += 0.001 * change;
+      console.log(angleChange);
       //animate();
     }
   };
