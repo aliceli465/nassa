@@ -107,3 +107,63 @@ input[type="number"] {
   width: 70px;
   aspect-ratio: square;
 }
+
+.modal {
+  position: absolute; /* Fixed position to cover the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Higher than other content */
+}
+
+.modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px; /* Width of the modal */
+  position: relative;
+  max-height: 80%;
+}
+
+/* App.css */
+.close-button {
+  position: absolute; /* Position relative to modal content */
+  top: 30px; /* Distance from the top */
+  right: 0px; /* Distance from the right */
+  padding: 10px 15px; /* Add some padding for better touch target */
+  font-size: 16px; /* Font size */
+  background-color: #f44336; /* Red background for visibility */
+  color: white; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.close-button:hover {
+  background-color: #921f1f; /* Darker red on hover */
+}
+
+/* App.css */
+.sidebar2 {
+  width: 400px; /* Set a fixed width for the sidebar */
+  padding: 20px;
+  background-color: #4e4d4d; /* Background color for the sidebar */
+  color: #fff; /* Text color */
+  border-radius: 8px; /* Rounded corners for aesthetics */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  gap: 10px; /* Space between controls */
+}
+
+.control2 {
+  display: flex; /* Use flexbox to align label and inputs */
+  flex-direction: column; /* Stack label and inputs vertically */
+}
+
+.control2 label {
+  margin-bottom: 5px; /* Space between label and input */
+}
