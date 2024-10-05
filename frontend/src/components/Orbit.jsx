@@ -4,7 +4,7 @@ import * as THREE from "three";
 
 const Orbit = ({ semiMajorAxis, semiMinorAxis }) => {
   const ellipsePoints = [];
-  const numPoints = 100; // Number of points for the ellipse
+  const numPoints = 10000; // Number of points for the ellipse
   for (let i = 0; i <= numPoints; i++) {
     const theta = (i / numPoints) * Math.PI * 2; // Angle for each point
     const x = semiMajorAxis * Math.cos(theta);
