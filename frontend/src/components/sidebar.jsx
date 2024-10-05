@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 function Sidebar() {
+  //It's joever
   // State to manage size, distance, and speed
   const [radius, setRadius] = useState(50);
   const [orbitSpeed, setOrbitSpeed] = useState(100);
