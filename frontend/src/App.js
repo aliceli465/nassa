@@ -1,14 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import logo from "./logo.svg";
 import "./App.css";
 
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import sunImage from "./assets/sun.jpg";
-import planetImage from "./assets/planet.jpg";
-import normalImage from "./assets/normal.jpg";
-import spaceImage from "./assets/space2.jpg";
 import Sun from "./components/Sun";
 import Planet from "./components/Planet";
 import Orbit from "./components/Orbit";
@@ -66,7 +61,7 @@ function App() {
     currentMount.appendChild(renderer.domElement);
     camera.position.setZ(30);
 
-    //Panning
+    //Panning and scrolling
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enablePan = true;
     controls.panSpeed = 1;
