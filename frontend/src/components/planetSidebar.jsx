@@ -1,12 +1,29 @@
-import React from "react";
+import React, {useState} from "react";
 
 function PlanetSidebar({ planet, handleInputChange }) {
+  const [isShown, setIsShown] = useState(false);
+  const [showId, setId] = useState(0);
+
+  function setInfo(state, id) {
+  setIsShown(state);
+  setId(id);
+}
   return (
     <div className="sidebar2">
       <h2>Planet Settings</h2>
 
       <div className="control2">
-        <label htmlFor="radius">Radius (km)</label>
+        <label htmlFor="radius">Radius (km)&nbsp; 
+          <object className = "info"
+          onMouseEnter={() => setInfo(true, 1)}
+          onMouseLeave={() => setInfo(false, 0)}>
+          ⓘ 
+          </object> </label>
+          {isShown && showId == 1 && (
+            <span className = "pInfoBox">
+              The distance the planet is from its sun. On average the Earth is 1 AU (Astronomical Unit) away from our Sun!
+            </span>
+          )}
         <input
           type="range"
           id="radius"
@@ -25,7 +42,17 @@ function PlanetSidebar({ planet, handleInputChange }) {
       </div>
 
       <div className="control2">
-        <label htmlFor="mass">Mass (kg)</label>
+        <label htmlFor="mass">Mass (kg)&nbsp; 
+          <object className = "info"
+          onMouseEnter={() => setInfo(true, 2)}
+          onMouseLeave={() => setInfo(false, 0)}>
+          ⓘ 
+          </object> </label>
+          {isShown && showId == 2 && (
+            <span className = "pInfoBox">
+              The distance the planet is from its sun. On average the Earth is 1 AU (Astronomical Unit) away from our Sun!
+            </span>
+          )}
         <input
           type="range"
           id="mass"
@@ -44,7 +71,17 @@ function PlanetSidebar({ planet, handleInputChange }) {
       </div>
 
       <div className="control2">
-        <label htmlFor="pressure">Pressure (atm)</label>
+        <label htmlFor="pressure">Pressure (atm)&nbsp; 
+          <object className = "info"
+          onMouseEnter={() => setInfo(true, 3)}
+          onMouseLeave={() => setInfo(false, 0)}>
+          ⓘ 
+          </object> </label>
+          {isShown && showId == 3 && (
+            <span className = "pInfoBox">
+              The distance the planet is from its sun. On average the Earth is 1 AU (Astronomical Unit) away from our Sun!
+            </span>
+          )}
         <input
           type="range"
           id="pressure"
