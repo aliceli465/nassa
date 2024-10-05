@@ -17,7 +17,7 @@ import Sidebar from "./components/sidebar";
 import PlanetSidebar from "./components/planetSidebar";
 
 function App() {
-  const angleChange = 0.01;
+  let angleChange = 0.01;
   const [modalOpen, setModalOpen] = useState(false);
   const [planet, setPlanet] = useState({
     radius: 0,
@@ -45,76 +45,78 @@ function App() {
   const mountRef = useRef(null);
   const angle = useRef(0); // Use a ref to keep track of the angle for the planet's orbit
 
-  const currentMount = mountRef.current;
-  if (!currentMount) return;
+  useEffect(() => {
+    const currentMount = mountRef.current;
+    if (!currentMount) return;
 
-  // Set up the scene, camera, and renderer
-  const scene = new THREE.Scene();
-  scene.background = null; //make background transparent
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  const renderer = new THREE.WebGLRenderer({ alpha: true });
-  renderer.setClearColor(0x000000, 0);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
-  currentMount.appendChild(renderer.domElement);
-  camera.position.setZ(30);
+    // Set up the scene, camera, and renderer
+    const scene = new THREE.Scene();
+    scene.background = null; //make background transparent
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setClearColor(0x000000, 0);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    currentMount.appendChild(renderer.domElement);
+    camera.position.setZ(30);
 
-  //Panning
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enablePan = true;
-  controls.panSpeed = 1;
-  controls.screenSpacePanning = false;
+    //Panning
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enablePan = true;
+    controls.panSpeed = 1;
+    controls.screenSpacePanning = false;
 
-  // Light source
-  const pointLight = new THREE.PointLight(0xffffff, 1000);
-  pointLight.position.set(20, 20, 20);
-  scene.add(pointLight);
+    // Light source
+    const pointLight = new THREE.PointLight(0xffffff, 1000);
+    pointLight.position.set(20, 20, 20);
+    scene.add(pointLight);
 
-  const sun_ = Sun();
-  const planet_ = Planet({ radius: 1 });
-  const orbit_ = Orbit({
-    semiMajorAxis: 15,
-    semiMinorAxis: 10,
-  });
+    const sun = Sun();
+    const planet = Planet({ radius: 1 });
+    const orbit_ = Orbit({
+      semiMajorAxis: 15,
+      semiMinorAxis: 10,
+    });
 
-  // Add a point light for glowing effect
-  const sunLight = new THREE.PointLight(0xffff00, 2, 100); // Yellow light, intensity 2
-  sunLight.position.set(0, 0, 0); // Position it at the center of the sun
-  scene.add(sunLight);
+    // Add a point light for glowing effect
+    const sunLight = new THREE.PointLight(0xffff00, 2, 100); // Yellow light, intensity 2
+    sunLight.position.set(0, 0, 0); // Position it at the center of the sun
+    scene.add(sunLight);
 
-  scene.add(sun_);
-  scene.add(planet_);
-  scene.add(orbit_);
+    scene.add(sun);
+    scene.add(planet);
+    scene.add(orbit_);
 
-  // Position the camera
-  camera.position.setZ(30);
+    // Position the camera
+    camera.position.setZ(30);
 
-  // Animation loop
-  function animate() {
-    requestAnimationFrame(animate);
-    angle.current += angleChange;
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      angle.current += angleChange;
 
-    // Calculate the new position of the planet based on the elliptical orbit
-    const x = 15 * Math.cos(angle.current);
-    const y = 10 * Math.sin(angle.current);
-    planet.position.set(x, y, 0);
-    //controls.update();
-    renderer.render(scene, camera);
-  }
-
-  animate(); // Call the animate function to start rendering
-
-  // Clean up on unmount
-  return () => {
-    if (currentMount) {
-      currentMount.removeChild(renderer.domElement);
+      // Calculate the new position of the planet based on the elliptical orbit
+      const x = 15 * Math.cos(angle.current);
+      const y = 10 * Math.sin(angle.current);
+      planet.position.set(x, y, 0);
+      //controls.update();
+      renderer.render(scene, camera);
     }
-  };
+
+    animate(); // Call the animate function to start rendering
+
+    // Clean up on unmount
+    return () => {
+      if (currentMount) {
+        currentMount.removeChild(renderer.domElement);
+      }
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -126,7 +128,7 @@ function App() {
 
   const handleOrbitChange = (e) => {
     const { name, value } = e.target;
-    const change = 0;
+    let change = 0;
     if (name == "orbitSpeed") {
       change = orbit.orbitSpeed - value;
     }
@@ -137,7 +139,7 @@ function App() {
 
     if (change != 0) {
       angleChange += 0.1;
-      animate();
+      //animate();
     }
   };
 
