@@ -34,6 +34,12 @@ function App() {
     orbitSpeed: 10,
     axialTilt: 0,
   });
+  const prevOrbitSpeed = useRef(orbit.orbitSpeed);
+
+  useEffect(() => {
+    // Update the ref with the current count after each render
+    prevOrbitSpeed.current = orbit.orbitSpeed;
+  });
 
   const [sun, setSun] = useState({
     radius: 0,
@@ -126,23 +132,23 @@ function App() {
     });
   };
 
+  const updateSpeed = (newSpeed) => {
+    let change = newSpeed - orbit.orbitSpeed;
+    if (change !== 0) {
+      angleChange += change * 0.001;
+    }
+  };
+
   const handleOrbitChange = (e) => {
     const { name, value } = e.target;
-    let change = 0;
-    if (name == "orbitSpeed") {
-      change = orbit.orbitSpeed - value;
-    }
     setOrbit({
       ...orbit,
       [name]: value,
     });
-
-    if (change != 0) {
-      angleChange += 0.1;
-      //animate();
-    }
+    updateSpeed(value);
   };
 
+  useEffect(() => {});
   const handleSunChange = (e) => {
     const { name, value } = e.target;
     setSun({
