@@ -1,20 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import logo from "./logo.svg";
 import "./App.css";
 
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import sunImage from "./assets/sun.jpg";
-import planetImage from "./assets/planet.jpg";
-import normalImage from "./assets/normal.jpg";
-import spaceImage from "./assets/space2.jpg";
 import Sun from "./components/Sun";
 import Planet from "./components/Planet";
 import Orbit from "./components/Orbit";
 
 import Sidebar from "./components/sidebar";
 import PlanetSidebar from "./components/planetSidebar";
+import PlanetEditor from "./components/PlanetEditor";
 
 function App() {
   let angleChange = 0.01;
@@ -71,7 +67,7 @@ function App() {
     currentMount.appendChild(renderer.domElement);
     camera.position.setZ(30);
 
-    //Panning
+    //Panning and scrolling
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enablePan = true;
     controls.panSpeed = 1;
@@ -175,20 +171,11 @@ function App() {
         </div>
       </div>
       {modalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button
-              className="close-button"
-              onClick={() => setModalOpen(false)}
-            >
-              Close
-            </button>
-            <PlanetSidebar
-              planet={planet}
-              handleInputChange={handleInputChange}
-            />
-          </div>
-        </div>
+        <PlanetEditor
+          planet={planet}
+          handleInputChange={handleInputChange}
+          closeEditor={() => setModalOpen(false)}
+        />
       )}
     </div>
   );
