@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import InfoButton from "./infobutton";
 
 function Sidebar() {
   // State to manage size, distance, and speed
@@ -11,12 +12,13 @@ function Sidebar() {
   const [sunTemperature, setSunTemperature] = useState(10);
   const [sunLuminosity, setSunLuminosity] = useState(10);
 
+  const [isShown, setIsShown] = useState(false);
+
   return (
     <div className="sidebar">
       <h2>Orbit Settings</h2>
-
       <div className="control">
-        <label htmlFor="radius">Orbital Radius (AU)</label>
+        <label htmlFor="radius">Orbital Radius (AU) &nbsp;<InfoButton> test </InfoButton>&nbsp; </label>
         <input
           type="range"
           id="radius"

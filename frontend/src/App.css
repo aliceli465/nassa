@@ -86,6 +86,18 @@ button {
   transition: background-color 0.2s ease;
 }
 
+.InfoButton {
+  background-color: #59378f; /* Electric purple */
+  color: #ffffff; /* White text */
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
 button:hover {
   background-color: #905ae6; /* Bright yellow on hover */
 }
