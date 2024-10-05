@@ -15,6 +15,7 @@ import Orbit from "./components/Orbit";
 
 import Sidebar from "./components/sidebar";
 import PlanetSidebar from "./components/planetSidebar";
+import PlanetEditor from "./components/PlanetEditor";
 
 function App() {
   let angleChange = 0.01;
@@ -169,20 +170,11 @@ function App() {
         </div>
       </div>
       {modalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button
-              className="close-button"
-              onClick={() => setModalOpen(false)}
-            >
-              Close
-            </button>
-            <PlanetSidebar
-              planet={planet}
-              handleInputChange={handleInputChange}
-            />
-          </div>
-        </div>
+        <PlanetEditor
+          planet={planet}
+          handleInputChange={handleInputChange}
+          closeEditor={() => setModalOpen(false)}
+        />
       )}
     </div>
   );
