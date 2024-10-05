@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 
-function Sidebar() {
-  // State to manage size, distance, and speed
-  const [radius, setRadius] = useState(50);
-  const [orbitSpeed, setOrbitSpeed] = useState(100);
-  const [axialTilt, setAxialTilt] = useState(10);
-
-  const [sunRadius, setSunRadius] = useState(50);
-  const [sunMass, setSunMass] = useState(100);
-  const [sunTemperature, setSunTemperature] = useState(10);
-  const [sunLuminosity, setSunLuminosity] = useState(10);
-
+function Sidebar({ orbit, sun, handleOrbitChange, handleSunChange }) {
   return (
     <div className="sidebar">
       <h2>Orbit Settings</h2>
@@ -22,30 +12,34 @@ function Sidebar() {
           id="radius"
           min="10"
           max="200"
-          value={radius}
-          onChange={(e) => setRadius(e.target.value)}
+          value={orbit.radius}
+          name="radius"
+          onChange={handleOrbitChange}
         />
         <input
           type="number"
-          value={radius}
-          onChange={(e) => setRadius(e.target.value)}
+          value={orbit.radius}
+          name="radius"
+          onChange={handleOrbitChange}
         />
       </div>
 
       <div className="control">
-        <label htmlFor="speed">Orbital Speed (km/s)</label>
+        <label htmlFor="speed">Orbital Speed (1000km/s)</label>
         <input
           type="range"
           id="speed"
-          min="50"
-          max="500"
-          value={orbitSpeed}
-          onChange={(e) => setOrbitSpeed(e.target.value)}
+          min="100"
+          max="5000"
+          value={orbit.orbitSpeed}
+          name="orbitSpeed"
+          onChange={handleOrbitChange}
         />
         <input
           type="number"
-          value={orbitSpeed}
-          onChange={(e) => setOrbitSpeed(e.target.value)}
+          value={orbit.orbitSpeed}
+          name="orbitSpeed"
+          onChange={handleOrbitChange}
         />
       </div>
 
@@ -56,13 +50,15 @@ function Sidebar() {
           id="tilt"
           min="1"
           max="100"
-          value={axialTilt}
-          onChange={(e) => setAxialTilt(e.target.value)}
+          value={orbit.axialTilt}
+          name="axialTilt"
+          onChange={handleOrbitChange}
         />
         <input
           type="number"
-          value={axialTilt}
-          onChange={(e) => setAxialTilt(e.target.value)}
+          value={orbit.axialTilt}
+          name="axialTilt"
+          onChange={handleOrbitChange}
         />
       </div>
 
@@ -74,13 +70,15 @@ function Sidebar() {
           id="sunRadius"
           min="10"
           max="200"
-          value={sunRadius}
-          onChange={(e) => setSunRadius(e.target.value)}
+          value={sun.radius}
+          name="radius"
+          onChange={handleSunChange}
         />
         <input
           type="number"
-          value={sunRadius}
-          onChange={(e) => setSunRadius(e.target.value)}
+          value={sun.radius}
+          name="radius"
+          onChange={handleSunChange}
         />
       </div>
 
@@ -91,13 +89,15 @@ function Sidebar() {
           id="mass"
           min="50"
           max="500"
-          value={sunMass}
-          onChange={(e) => setSunMass(e.target.value)}
+          value={sun.mass}
+          name="mass"
+          onChange={handleSunChange}
         />
         <input
           type="number"
-          value={sunMass}
-          onChange={(e) => setSunMass(e.target.value)}
+          value={sun.mass}
+          name="mass"
+          onChange={handleSunChange}
         />
       </div>
 
@@ -107,14 +107,16 @@ function Sidebar() {
           type="range"
           id="temp"
           min="1"
-          max="100"
-          value={sunTemperature}
-          onChange={(e) => setSunTemperature(e.target.value)}
+          max="10000"
+          value={sun.temperature}
+          name="temperature"
+          onChange={handleSunChange}
         />
         <input
           type="number"
-          value={sunTemperature}
-          onChange={(e) => setSunTemperature(e.target.value)}
+          value={sun.temperature}
+          name="temperature"
+          onChange={handleSunChange}
         />
       </div>
 
@@ -125,13 +127,15 @@ function Sidebar() {
           id="luminosity"
           min="1"
           max="100"
-          value={sunLuminosity}
-          onChange={(e) => setSunLuminosity(e.target.value)}
+          value={sun.luminosity}
+          name="luminosity"
+          onChange={handleSunChange}
         />
         <input
           type="number"
-          value={sunLuminosity}
-          onChange={(e) => setSunLuminosity(e.target.value)}
+          value={sun.luminosity}
+          name="luminosity"
+          onChange={handleSunChange}
         />
       </div>
     </div>
