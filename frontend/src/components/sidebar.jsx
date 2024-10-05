@@ -104,7 +104,7 @@ function Sidebar() {
       </div>
 
       <div className="control">
-        <label htmlFor="temp">Temperature (Kelvin)</label>
+        <label htmlFor="temp">Temperature (Celsius)</label>
         <input
           type="range"
           id="temp"
