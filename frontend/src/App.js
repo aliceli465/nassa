@@ -1,20 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import sunImage from './assets/sun.jpg';
-import planetImage from './assets/planet.jpg';
-import normalImage from './assets/normal.jpg';
-import spaceImage from './assets/space2.jpg';
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import sunImage from "./assets/sun.jpg";
+import planetImage from "./assets/planet.jpg";
+import normalImage from "./assets/normal.jpg";
+import spaceImage from "./assets/space2.jpg";
 
 import Sidebar from "./components/sidebar";
 import PlanetSidebar from "./components/planetSidebar";
 
 function App() {
-
   const [modalOpen, setModalOpen] = useState(false);
   const [planet, setPlanet] = useState({
     radius: 0,
@@ -43,14 +42,19 @@ function App() {
 
     // Set up the scene, camera, and renderer
     const scene = new THREE.Scene();
-    scene.background = null
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    scene.background = null;
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
     const renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setClearColor(0x000000, 0);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
-    currentMount.appendChild(renderer.domElement); 
-    
+    currentMount.appendChild(renderer.domElement);
+
     //Panning
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enablePan = true;
@@ -69,7 +73,7 @@ function App() {
 
     //Sun
     // Replace the moon code with the sun code
-    const sunTexture = new THREE.TextureLoader().load(sunImage); 
+    const sunTexture = new THREE.TextureLoader().load(sunImage);
     const normalTexture = new THREE.TextureLoader().load(normalImage);
     const sunMaterial = new THREE.MeshBasicMaterial({
       map: sunTexture,
@@ -90,7 +94,6 @@ function App() {
     sunLight.position.set(0, 0, 0); // Position it at the center of the sun
     scene.add(sunLight);
 
-
     /*
     // Add stars
     function addStar() {
@@ -106,11 +109,14 @@ function App() {
     }
     Array(200).fill().forEach(addStar);
     */
-    
+
     // Planet
     const planetTexture = new THREE.TextureLoader().load(planetImage);
     const planetMaterial = new THREE.MeshBasicMaterial({ map: planetTexture });
-    const planet = new THREE.Mesh(new THREE.SphereGeometry(1  , 32, 32), planetMaterial); // Size of the planet
+    const planet = new THREE.Mesh(
+      new THREE.SphereGeometry(1, 32, 32),
+      planetMaterial
+    ); // Size of the planet
     scene.add(planet);
 
     // Define the semi-major and semi-minor axes for the orbit
@@ -126,9 +132,14 @@ function App() {
       const y = semiMinorAxis * Math.sin(theta);
       ellipsePoints.push(new THREE.Vector3(x, y, 0)); // Z remains constant
     }
-    
-    const ellipseGeometry = new THREE.BufferGeometry().setFromPoints(ellipsePoints);
-    const ellipseMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 });
+
+    const ellipseGeometry = new THREE.BufferGeometry().setFromPoints(
+      ellipsePoints
+    );
+    const ellipseMaterial = new THREE.LineBasicMaterial({
+      color: 0xffffff,
+      linewidth: 2,
+    });
     const ellipsePath = new THREE.LineLoop(ellipseGeometry, ellipseMaterial); // Create a loop for the ellipse
     scene.add(ellipsePath); // Add the orbit path to the scene
 
@@ -168,8 +179,8 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-      <canvas id="bg"></canvas>
-      <div ref={mountRef} style={{ width: '100vw', height: '100vh' }}></div> {/* This div will contain the Three.js canvas */}
+        <canvas id="bg"></canvas>
+        <div ref={mountRef} style={{ height: "100vh" }}></div>
         <Sidebar />
         <div className="button-container">
           <button onClick={() => setModalOpen(true)}>Edit my planet</button>
