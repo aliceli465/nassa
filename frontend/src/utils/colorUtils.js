@@ -8,6 +8,9 @@ export const interpolateColor = (value) => {
   const normalizedValue = clampedValue / 1000; // Range from 0 to 1
 
   //(255, 0, 0) to (255, 255, 0)
+  if (normalizedValue > 0.7) {
+    return new THREE.Color(0,1,1);
+  }
   return new THREE.Color(1, normalizedValue * 3, 0);
 };
 

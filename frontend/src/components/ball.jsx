@@ -55,6 +55,7 @@ const orbitOffset = 0.3;
 const Ball = ({ size, heat }) => {
   const meshRef = useRef();
   const sunTexture = useLoader(TextureLoader, sunImage);
+  const normalTexture = useLoader(TextureLoader, normalImage);
 
   useFrame(() => {
     // Set the color of the sun based on heat
@@ -67,10 +68,9 @@ const Ball = ({ size, heat }) => {
         <sphereGeometry args={[size, 32, 32]} />
         <meshStandardMaterial 
           map={sunTexture} 
+          normalMap={normalTexture}
           emissive={interpolateColor(Math.max(0, heat))} 
-          emissiveIntensity={0.2
-            
-          } 
+          emissiveIntensity={Math.min(0.3, Math.max(0, heat) * 0.001)} 
         />
 
       </mesh>
