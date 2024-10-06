@@ -58,6 +58,14 @@ const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat, tilt }) => 
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
+      {/* Bloom effect for glowing effect */}
+      <EffectComposer>
+        <Bloom
+          intensity={1.5} // Adjust intensity for desired glow effect
+          luminanceThreshold={0.2} // Threshold for applying bloom
+          luminanceSmoothing={0.9} // Smoothing to control how much bloom is applied
+        />
+      </EffectComposer>
     </>
   );
 };
