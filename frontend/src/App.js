@@ -6,16 +6,14 @@ import Result from "./components/Result";
 import "./App.css";
 import About from "./pages/about"
 // import { ReactDOM } from "react-dom/client";
+import Sources from "./pages/sources"
+import NotFound from "./pages/notfound";
 
 import { BrowserRouter, BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar"; // You can omit the ".jsx" in most cases.
 import OrbitingBallModal from "./components/justBall";
 
 function Index() {
-
-  const Home = () => <h1>Home Page</h1>;
-  const Sources = () => <h1>Sources & References</h1>;
-  const NotFoundPage = () => <h1>404 - Page Not Found</h1>;
   return (
     <>
       <Router>
@@ -27,6 +25,7 @@ function Index() {
               <Route exact path="/" element={<App />} />
               <Route path="/About" element={<About />} />
               <Route path="/sources" element={<Sources />} />
+              <Route path="*" element={<NotFound />} />
               {/* Catch-all route */}
             </Routes>
 
