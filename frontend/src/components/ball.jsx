@@ -70,6 +70,7 @@ export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
   const planetTexture = useLoader(TextureLoader, planetImage);
   const normalTexture = useLoader(TextureLoader, normalImage);
   const waterTexture = useLoader(TextureLoader, waterImage);
+
   const shaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
       vertexShader,
@@ -81,6 +82,7 @@ export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
       },
     });
   }, [planetTexture, waterTexture, waterCoverage]);
+
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     // Adjust position based on the radius for orbit
@@ -99,7 +101,7 @@ export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
       {/* Orbiting Planet */}
       <mesh ref={meshRef} position={[0, 0, 0]}>
         <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
-        <meshStandardMaterial map={planetTexture} normalMap={normalTexture} />
+        <primitive object={shaderMaterial} attach="material" />{" "}
       </mesh>
     </>
   );
