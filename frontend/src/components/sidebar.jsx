@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 function Sidebar({
   handleSizeChange,
@@ -34,15 +34,15 @@ function Sidebar({
             onChange={handleSizeChange}
             className="input"
           />
-          <p className="label">Size of the large ball: {size} &nbsp; 
+          <p className="label">Size of the large ball: {size}&nbsp; 
           <object className = "info"
           onMouseEnter={() => setInfo(true, 1)}
           onMouseLeave={() => setInfo(false, 0)}>
           ⓘ 
-          </object></p>
+          </object> </p>
           {isShown && showId == 1 && (
             <span className = "infoBox">
-              Filler
+              Filler.
             </span>
           )}
         </div>
@@ -61,12 +61,12 @@ function Sidebar({
           onMouseEnter={() => setInfo(true, 2)}
           onMouseLeave={() => setInfo(false, 0)}>
           ⓘ 
-          </object></p>
+          </object> </p>
           {isShown && showId == 2 && (
             <span className = "infoBox">
-            Filler!!!
-          </span>
-        )}
+              Filler.
+            </span>
+          )}
         </div>
         <div className="slider">
           <input
@@ -79,17 +79,17 @@ function Sidebar({
             className="input"
           />
           <p className="label">
-            Orbit Radius (Distance balls): {orbitRadius} &nbsp; 
+            Orbit Radius (Distance between balls): {orbitRadius}&nbsp; 
           <object className = "info"
           onMouseEnter={() => setInfo(true, 3)}
           onMouseLeave={() => setInfo(false, 0)}>
           ⓘ 
-          </object></p>
+          </object> </p>
           {isShown && showId == 3 && (
             <span className = "infoBox">
-            Filler!!!
-          </span>
-        )}
+              Filler.
+            </span>
+          )}
         </div>
         <div className="slider">
           <input
@@ -106,12 +106,12 @@ function Sidebar({
           onMouseEnter={() => setInfo(true, 4)}
           onMouseLeave={() => setInfo(false, 0)}>
           ⓘ 
-          </object></p>
+          </object> </p>
           {isShown && showId == 4 && (
             <span className = "infoBox">
-            Filler!!!
-          </span>
-        )}
+              Filler.
+            </span>
+          )}
         </div>
         <div className="slider">
           <input
@@ -128,12 +128,12 @@ function Sidebar({
           onMouseEnter={() => setInfo(true, 5)}
           onMouseLeave={() => setInfo(false, 0)}>
           ⓘ 
-          </object></p>
+          </object> </p>
           {isShown && showId == 5 && (
             <span className = "infoBox">
-            Filler!!!
-          </span>
-        )}
+              Filler.
+            </span>
+          )}
         </div>
       </div>
     </div>
