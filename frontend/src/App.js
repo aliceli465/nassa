@@ -5,6 +5,8 @@ import Sidebar from "./components/sidebar";
 import Result from "./components/Result";
 import "./App.css";
 import About from "./pages/about"
+import Sources from "./pages/sources"
+import NotFound from "./pages/notfound"
 // import { ReactDOM } from "react-dom/client";
 import Sources from "./pages/sources"
 import NotFound from "./pages/notfound";

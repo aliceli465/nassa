@@ -1,10 +1,9 @@
 function Sources() {
     return (
-      <>
-              I'll get the sources in!
-      </>
+        <>
+            I'll put in the source soon I swear
+        </>
     );
-  }
-  
-  export default Sources;
-  
+}
+
+export default Sources;
