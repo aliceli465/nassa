@@ -98,7 +98,7 @@ function App() {
       <div className="button-container">
         <button onClick={() => setModalOpen(true)}>Edit my planet</button>
         <br></br>
-        <img src="./planet.gif" className="pwanet" />
+        <img src="../planet.gif" className="pwanet" />
       </div>
       <div
         style={{

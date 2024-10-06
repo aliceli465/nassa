@@ -50,6 +50,8 @@ void main() {
 }
 `;
 
+const orbitOffset = 0.3;
+
 const Ball = ({ size, heat }) => {
   const meshRef = useRef();
   const sunTexture = useLoader(TextureLoader, sunImage);
@@ -121,7 +123,8 @@ export const getHabitability = ({
 };
 
 export const OrbitingBall = ({
-  radius,
+  majorRadius,
+  minorRadius,
   size,
   speed,
   waterCoverage,
@@ -161,8 +164,8 @@ export const OrbitingBall = ({
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     // Adjust position based on the radius for orbit
-    meshRef.current.position.x = radius * Math.cos(time * speed);
-    meshRef.current.position.z = radius * Math.sin(time * speed);
+    meshRef.current.position.x = majorRadius * Math.cos(time * speed) + orbitOffset;
+    meshRef.current.position.z = minorRadius * Math.sin(time * speed);
   });
 
   const createMagneticRings = () => {
@@ -213,21 +216,22 @@ export const OrbitingBall = ({
 const Scene = ({
   sunSize,
   planetSize,
-  orbitRadius,
+  majorRadius,
+  minorRadius,
   orbitSpeed,
   heat,
   waterCoverage,
   atmosphere,
   magnetosphere,
 }) => {
-  const createOrbitPath = (radius) => {
+  const createOrbitPath = (majorRadius, minorRadius) => {
     const lines = [];
     const lineColor = magnetosphere === 10 ? 0x66ffff : 0x00ffff;
     const curve = new THREE.EllipseCurve(
+      orbitOffset,
       0,
-      0,
-      radius,
-      radius,
+      majorRadius,
+      minorRadius,
       0,
       2 * Math.PI,
       false,
@@ -236,7 +240,7 @@ const Scene = ({
     const points = curve.getPoints(50);
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
     lines.push(
-      <group rotation={[Math.PI / 2, 0, 0]} key={`orbit-path-${radius}`}>
+      <group rotation={[Math.PI / 2, 0, 0]} key={`orbit-path-${majorRadius}`}>
         <line>
           <bufferGeometry attach="geometry" {...geometry} />
           <lineBasicMaterial color={lineColor} linewidth={5} />{" "}
@@ -258,10 +262,11 @@ const Scene = ({
         shadow-mapSize-height={1024} // Increase shadow resolution
         shadow-bias={-0.001}
       />
-      {createOrbitPath(orbitRadius)}
+      {createOrbitPath(majorRadius, minorRadius)}
       <Ball size={sunSize} heat={heat} />
       <OrbitingBall
-        radius={orbitRadius}
+        majorRadius={majorRadius}
+        minorRadius={minorRadius}
         size={planetSize}
         speed={orbitSpeed}
         waterCoverage={waterCoverage}
@@ -290,7 +295,8 @@ export default function BallScene({
         <Scene
           sunSize={sunSize}
           planetSize={planetSize}
-          orbitRadius={orbitRadius}
+          majorRadius={orbitRadius * 1.5}
+          minorRadius={orbitRadius}
           orbitSpeed={orbitSpeed}
           heat={heat}
           waterCoverage={waterCoverage}
