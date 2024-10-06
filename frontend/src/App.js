@@ -22,6 +22,9 @@ function App() {
   });
 
   const [waterCoverage, setWaterCoverage] = useState(0);
+  const [atmosphere, setAtmosphere] = useState(0);
+  const [temperature, setTemperature] = useState(20000);
+
 
   const handleOrbitingBall = (newProps) => {
     setOrbitingBall((prevProps) => ({
@@ -117,6 +120,10 @@ function App() {
           setModalOpen={setModalOpen}
           waterCoverage={waterCoverage}
           setWaterCoverage={setWaterCoverage}
+          temperature={temperature}
+          setTemperature={setTemperature}
+          atmosphere={atmosphere}
+          setAtmosphere={setAtmosphere}
         />
       )}
     </>

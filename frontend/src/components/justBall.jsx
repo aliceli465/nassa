@@ -6,9 +6,9 @@ import { TextureLoader } from "three";
 
 import { OrbitControls } from "@react-three/drei";
 
-const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, setWaterCoverage}) => {
+const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, setWaterCoverage, temperature, setTemperature,
+  atmosphere, setAtmosphere }) => {
   // const [waterCoverage, setWaterCoverage] = useState(0);
-  const [temperature, setTemperature] = useState(0);
 
   return (
     <div className="modal-overlay">
@@ -42,6 +42,23 @@ const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, s
             id="temperature"
             value={temperature}
             onChange={(e) => setTemperature(Number(e.target.value))}
+            style={{ marginLeft: "10px" }}
+          >
+            <option value={0}>0</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={75}>75</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
+        <div style={{ margin: "1rem 0" }}>
+          <label htmlFor="Atmosphere Thickness">
+            Atmosphere Thickness: {waterCoverage}%
+          </label>
+          <select
+            id="atmosphere"
+            value={atmosphere}
+            onChange={(e) => setAtmosphere(Number(e.target.value))}
             style={{ marginLeft: "10px" }}
           >
             <option value={0}>0</option>
