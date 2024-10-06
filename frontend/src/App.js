@@ -6,7 +6,7 @@ import "./App.css";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar"; // You can omit the ".jsx" in most cases.
-
+import OrbitingBallModal from "./components/justBall";
 function App() {
   const [sunSize, setSunSize] = useState(1); // sunSize of the larger ball
   const [planetSize, setPlanetSize] = useState(0.2); // sunSize of the smaller ball
@@ -14,6 +14,19 @@ function App() {
   const [orbitSpeed, setOrbitSpeed] = useState(0.5); // Speed of orbiting ball
   const [heat, setHeat] = useState(0); // Heat level for color change of the sun
   const [modalOpen, setModalOpen] = useState(false);
+  const [orbitingBall, setOrbitingBall] = useState({
+    water: 0,
+    atmosphere: 0,
+    temperature: 0,
+    windspeed: 0,
+  });
+
+  const handleOrbitingBall = (newProps) => {
+    setOrbitingBall((prevProps) => ({
+      ...prevProps,
+      ...newProps,
+    }));
+  };
 
   const handleSunSizeChange = (event) => {
     setSunSize(event.target.value);
@@ -93,6 +106,14 @@ function App() {
           />
         </div>
       </div>
+      {modalOpen && (
+        <OrbitingBallModal
+          radius={0}
+          size={planetSize * 5}
+          speed={0}
+          setModalOpen={setModalOpen}
+        />
+      )}
     </>
   );
 }

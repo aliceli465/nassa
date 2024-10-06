@@ -1,13 +1,50 @@
 // src/Ball.js
-import React, { useRef } from "react";
-import { Canvas, useFrame, useLoader} from "@react-three/fiber";
+import React, { useRef, useMemo } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { interpolateColor } from "../utils/colorUtils";
 import { TextureLoader } from "three";
+import { ShaderMaterial } from "three";
+import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing"; // For bloom effect
 import sunImage from "../assets/sun.jpg";
-import planetImage from "../assets/planet.jpg"; 
-import normalImage from "../assets/normal.jpg"; 
+import planetImage from "../assets/planet.jpg";
+import normalImage from "../assets/normal.jpg";
+import waterImage from "../assets/wataa.webp";
+
+const vertexShader = `
+varying vec2 vUv;
+
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+const fragmentShader = `
+uniform sampler2D baseTexture;
+uniform sampler2D waterTexture;
+uniform float coverage;
+varying vec2 vUv;
+
+// Function to generate pseudo-random numbers based on coordinates
+float random(vec2 st) {
+    return fract(sin(dot(st.xy ,vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+  vec4 baseColor = texture2D(baseTexture, vUv);
+  vec4 waterColor = texture2D(waterTexture, vUv);
+  
+  // Generate noise to create random water coverage
+  float noise = random(vUv * 10.0); // Scale for larger chunks
+
+  // Determine the blend based on the coverage value and noise
+  float blend = smoothstep(0.0, 1.0, (noise - (1.0 - coverage)) * (1.0 / coverage));
+
+  gl_FragColor = mix(baseColor, waterColor, blend);
+}
+`;
 
 const Ball = ({ size, heat }) => {
   const meshRef = useRef();
@@ -19,34 +56,41 @@ const Ball = ({ size, heat }) => {
   });
   return (
     <>
-      <mesh ref={meshRef} castShadow receiveShadow position={[0,0,0]}>
+      <mesh ref={meshRef} castShadow receiveShadow position={[0, 0, 0]}>
         <sphereGeometry args={[size, 32, 32]} />
-        <meshStandardMaterial map={sunTexture}/>
+        <meshStandardMaterial map={sunTexture} />
       </mesh>
     </>
   );
 };
 
-const OrbitingBall = ({ radius, size, speed, tilt}) => {
+export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
   const meshRef = useRef();
-  const planetTexture = useLoader(TextureLoader, planetImage); 
+  const planetTexture = useLoader(TextureLoader, planetImage);
   const normalTexture = useLoader(TextureLoader, normalImage);
-
+  const waterTexture = useLoader(TextureLoader, waterImage);
+  const shaderMaterial = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms: {
+        baseTexture: { value: planetTexture },
+        waterTexture: { value: waterTexture },
+        coverage: { value: waterCoverage / 100 }, // Normalize the coverage value
+      },
+    });
+  }, [planetTexture, waterTexture, waterCoverage]);
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     // Adjust position based on the radius for orbit
     meshRef.current.position.x = radius * Math.cos(time * speed);
     meshRef.current.position.z = radius * Math.sin(time * speed);
-
-    meshRef.current.rotation.x = tilt * Math.PI; // Tilt between 0 and PI radians
-    meshRef.current.rotation.y = time * 2; // Spin on Y-axis
-    meshRef.current.rotation.z = tilt * Math.PI; // Additional tilt for visibility
   });
 
   return (
     <mesh ref={meshRef} position={[0, 0, 0]}>
       <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
-      <meshStandardMaterial map={planetTexture} normalMap={normalTexture} />
+      <primitive object={shaderMaterial} attach="material" />
     </mesh>
   );
 };
@@ -68,7 +112,7 @@ const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
         radius={orbitRadius}
         size={planetSize}
         speed={orbitSpeed}
-        tilt = {0}
+        tilt={0}
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
