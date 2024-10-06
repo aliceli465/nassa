@@ -30,15 +30,15 @@ const OrbitingBall = ({ radius, size, speed }) => {
   );
 };
 
-const Scene = ({ size, orbitingSize, orbitRadius, orbitSpeed }) => {
+const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed }) => {
   return (
     <>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Ball size={size} />
+      <Ball size={sunSize} />
       <OrbitingBall
         radius={orbitRadius}
-        size={orbitingSize}
+        size={planetSize}
         speed={orbitSpeed}
       />{" "}
       {/* Adjust orbitRadius */}
@@ -48,16 +48,16 @@ const Scene = ({ size, orbitingSize, orbitRadius, orbitSpeed }) => {
 };
 
 export default function BallScene({
-  size,
-  orbitingSize,
+  sunSize,
+  planetSize,
   orbitRadius,
   orbitSpeed,
 }) {
   return (
     <Canvas style={{ height: "400px" }}>
       <Scene
-        size={size}
-        orbitingSize={orbitingSize}
+        sunSize={sunSize}
+        planetSize={planetSize}
         orbitRadius={orbitRadius}
         orbitSpeed={orbitSpeed}
       />

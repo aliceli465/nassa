@@ -3,17 +3,17 @@ import React, { useState } from "react";
 import BallScene from "./components/ball";
 
 function App() {
-  const [size, setSize] = useState(1); // Size of the larger ball
-  const [orbitingSize, setOrbitingSize] = useState(0.2); // Size of the smaller ball
+  const [sunSize, setSunSize] = useState(1); // sunSize of the larger ball
+  const [planetSize, setPlanetSize] = useState(0.2); // sunSize of the smaller ball
   const [orbitRadius, setOrbitRadius] = useState(2); // Orbit radius
   const [orbitSpeed, setOrbitSpeed] = useState(0.5); // Speed of orbiting ball
 
-  const handleSizeChange = (event) => {
-    setSize(event.target.value);
+  const handleSunSizeChange = (event) => {
+    setSunSize(event.target.value);
   };
 
-  const handleOrbitingSizeChange = (event) => {
-    setOrbitingSize(event.target.value);
+  const handlePlanetSizeChange = (event) => {
+    setPlanetSize(event.target.value);
   };
 
   const handleOrbitRadiusChange = (event) => {
@@ -28,8 +28,8 @@ function App() {
     <div style={{ textAlign: "center" }}>
       <h1>Three.js Ball in React</h1>
       <BallScene
-        size={size}
-        orbitingSize={orbitingSize}
+        sunSize={sunSize}
+        planetSize={planetSize}
         orbitRadius={orbitRadius}
         orbitSpeed={orbitSpeed}
       />
@@ -39,10 +39,10 @@ function App() {
           min="0.1"
           max="3"
           step="0.1"
-          value={size}
-          onChange={handleSizeChange}
+          value={sunSize}
+          onChange={handleSunSizeChange}
         />
-        <p>Size of the large ball: {size}</p>
+        <p>sunSize of the large ball: {sunSize}</p>
       </div>
       <div>
         <input
@@ -50,10 +50,10 @@ function App() {
           min="0.1"
           max="1"
           step="0.01"
-          value={orbitingSize}
-          onChange={handleOrbitingSizeChange}
+          value={planetSize}
+          onChange={handlePlanetSizeChange}
         />
-        <p>Size of the smaller ball: {orbitingSize}</p>
+        <p>sunSize of the smaller ball: {planetSize}</p>
       </div>
       <div>
         <input
