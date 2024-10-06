@@ -4,6 +4,8 @@ import BallScene from "./components/ball";
 import Sidebar from "./components/sidebar";
 import "./App.css";
 import About from "./pages/about"
+import Sources from "./pages/sources"
+import NotFound from "./pages/notfound"
 // import { ReactDOM } from "react-dom/client";
 
 import { BrowserRouter, BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -12,24 +14,21 @@ import OrbitingBallModal from "./components/justBall";
 
 function Index() {
 
-  const Home = () => <h1>Home Page</h1>;
-  const Sources = () => <h1>Sources & References</h1>;
-  const NotFoundPage = () => <h1>404 - Page Not Found</h1>;
     return (
     <>
         <Router>
       <div>
           <Navbar />
             <div style={{ padding: "2rem" }}>
-                        <h1>hi</h1>
+                        {/* <h1>hi</h1> */}
               <Routes>
                 <Route exact path="/" element={<App />} />
                 <Route path="/About" element={<About />} />
                 <Route path="/sources" element={<Sources />} />
+                <Route path="*" element={<NotFound />} />
                 {/* Catch-all route */}
               </Routes>
-
-                        <h1>hi2</h1>
+                       {/* <h1>hi2</h1> */}
             </div>
       </div>
         </Router>
