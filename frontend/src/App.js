@@ -20,7 +20,6 @@ import OrbitingBallModal from "./components/justBall";
 
 function Index() {
   const Home = () => <h1>Home Page</h1>;
-  const Sources = () => <h1>Sources & References</h1>;
   const NotFoundPage = () => <h1>404 - Page Not Found</h1>;
   return (
     <>
