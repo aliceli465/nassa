@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Modal from "react-modal";
 
 function Sidebar({
   handleSizeChange,
@@ -14,11 +15,21 @@ function Sidebar({
 }) {
   const [isShown, setIsShown] = useState(false);
   const [showId, setId] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   function setInfo(state, id) {
     setIsShown(state);
     setId(id);
   }
+
+  const handleGenerateGraph = async () => {
+    setLoading(true); // Set loading state
+    // Simulate an API call or some processing time
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // 2 seconds delay
+    setLoading(false); // Reset loading state
+    setModalOpen(true); // Open modal
+  };
 
   return (
     <div className="sidebar">
@@ -34,15 +45,20 @@ function Sidebar({
             onChange={handleSizeChange}
             className="input"
           />
-          <p className="label">Radius of the Star: {size}&nbsp;
-            <object className="info"
+          <p className="label">
+            Radius of the Star: {size}&nbsp;
+            <object
+              className="info"
               onMouseEnter={() => setInfo(true, 1)}
-              onMouseLeave={() => setInfo(false, 0)}>
+              onMouseLeave={() => setInfo(false, 0)}
+            >
               ⓘ
-            </object> </p>
+            </object>{" "}
+          </p>
           {isShown && showId == 1 && (
             <span className="infoBox">
-              This defines the radius of the large star that our exoplanet is orbiting around
+              This defines the radius of the large star that our exoplanet is
+              orbiting around. Given in R☉, solar radii
             </span>
           )}
         </div>
@@ -56,15 +72,20 @@ function Sidebar({
             onChange={handleOrbitingSizeChange}
             className="input"
           />
-          <p className="label">Radius of the exoplanet: {orbitingSize}&nbsp;
-            <object className="info"
+          <p className="label">
+            Radius of the exoplanet: {orbitingSize}&nbsp;
+            <object
+              className="info"
               onMouseEnter={() => setInfo(true, 2)}
-              onMouseLeave={() => setInfo(false, 0)}>
+              onMouseLeave={() => setInfo(false, 0)}
+            >
               ⓘ
-            </object> </p>
+            </object>{" "}
+          </p>
           {isShown && showId == 2 && (
             <span className="infoBox">
-              This defines the radius of the exoplanet that we are creating
+              This defines the radius of the exoplanet that we are creating.
+              Given in R⊕, earth radii
             </span>
           )}
         </div>
@@ -79,15 +100,19 @@ function Sidebar({
             className="input"
           />
           <p className="label">
-            Orbit Radius (Distance between balls): {orbitRadius}&nbsp;
-            <object className="info"
+            Orbital Radius: {orbitRadius}&nbsp;
+            <object
+              className="info"
               onMouseEnter={() => setInfo(true, 3)}
-              onMouseLeave={() => setInfo(false, 0)}>
+              onMouseLeave={() => setInfo(false, 0)}
+            >
               ⓘ
-            </object> </p>
+            </object>{" "}
+          </p>
           {isShown && showId == 3 && (
             <span className="infoBox">
-              This defines the distance between the orbital of the exoplanet and the orbital of the sun
+              This defines the distance between the orbital of the exoplanet and
+              the orbital of the sun. Given in earth radii
             </span>
           )}
         </div>
@@ -101,15 +126,20 @@ function Sidebar({
             onChange={handleOrbitSpeedChange}
             className="input"
           />
-          <p className="label">Orbit Speed: {orbitSpeed}&nbsp;
-            <object className="info"
+          <p className="label">
+            Orbital Speed: {orbitSpeed}&nbsp;
+            <object
+              className="info"
               onMouseEnter={() => setInfo(true, 4)}
-              onMouseLeave={() => setInfo(false, 0)}>
+              onMouseLeave={() => setInfo(false, 0)}
+            >
               ⓘ
-            </object> </p>
+            </object>{" "}
+          </p>
           {isShown && showId == 4 && (
             <span className="infoBox">
-              This defines the rotational speed of the exoplanet around its sun, or the period of its orbit.
+              This defines the rotational speed of the exoplanet around its sun,
+              or the period of its orbit. Given in km/s
             </span>
           )}
         </div>
@@ -117,24 +147,63 @@ function Sidebar({
           <input
             type="range"
             min="0"
-            max="1"
-            step="0.01"
+            max="1000"
             value={heat}
             onChange={handleHeatChange}
             className="input"
           />
-          <p className="label">Luminence (Color of the sun): {heat}&nbsp;
-            <object className="info"
+          <p className="label">
+            Sun Temperature : {heat}0°C&nbsp;
+            <object
+              className="info"
               onMouseEnter={() => setInfo(true, 5)}
-              onMouseLeave={() => setInfo(false, 0)}>
+              onMouseLeave={() => setInfo(false, 0)}
+            >
               ⓘ
-            </object> </p>
+            </object>{" "}
+          </p>
           {isShown && showId == 5 && (
             <span className="infoBox">
-              This value represents how bright the sun is. It also affects the temperature of the sun.
+              The hotter the sun, the bluer! Given in Celsius
             </span>
           )}
         </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <button onClick={handleGenerateGraph} className="genButton">
+          {loading ? "Generating..." : "Generate Transit Graph"}
+        </button>
+
+        {/* Modal for displaying the graph */}
+        <Modal
+          isOpen={modalOpen}
+          onRequestClose={() => setModalOpen(false)}
+          contentLabel="Transit Light Curve"
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img src="./transit_light_curve.png" alt="Transit Light Curve" />
+            <br />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
+        </Modal>
       </div>
     </div>
   );

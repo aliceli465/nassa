@@ -34,10 +34,10 @@ const Navbar = () => {
 const styles = {
   navbar: {
     background: "linear-gradient(180deg, #0d0b1d 0%, #2c2a4b 100%)",
-    padding: "1rem",
+    padding: "5px",
     zIndex: 1000,
     position: "relative", // This helps with positioning
-    marginBottom: "5%",
+    marginBottom: "2%",
   },
   navItems: {
     display: "flex",
@@ -50,8 +50,9 @@ const styles = {
     color: "#fff",
     textDecoration: "none",
     fontSize: "1.2rem",
-    padding: "10px",
     borderRadius: "5px",
+    paddingRight: "15px",
+    paddingLeft: "15px",
     display: "block",
     transition: "background 0.3s ease", // Add smooth transition on hover
   },

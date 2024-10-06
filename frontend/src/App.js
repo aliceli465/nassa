@@ -1,19 +1,26 @@
 // src/App.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BallScene from "./components/ball";
 import Sidebar from "./components/sidebar";
 import Result from "./components/Result";
 import "./App.css";
-import About from "./pages/about"
-import Sources from "./pages/sources"
-import NotFound from "./pages/notfound"
+import About from "./pages/about";
+import Sources from "./pages/sources";
+import NotFound from "./pages/notfound";
 // import { ReactDOM } from "react-dom/client";
 
-import { BrowserRouter, BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Navbar from "./components/Navbar"; // You can omit the ".jsx" in most cases.
 import OrbitingBallModal from "./components/justBall";
 
 function Index() {
+  const Home = () => <h1>Home Page</h1>;
+  const NotFoundPage = () => <h1>404 - Page Not Found</h1>;
   return (
     <>
       <Router>
@@ -31,7 +38,7 @@ function Index() {
         </div>
       </Router>
     </>
-  )
+  );
 }
 
 function App() {
@@ -41,29 +48,42 @@ function App() {
   const [orbitSpeed, setOrbitSpeed] = useState(0.5); // Speed of orbiting ball
   const [heat, setHeat] = useState(0); // Heat level for color change of the sun
   const [modalOpen, setModalOpen] = useState(false);
-  const [orbitingBall, setOrbitingBall] = useState({
-    water: 0,
-    atmosphere: 0,
-    temperature: 0,
-    windspeed: 0,
-  });
+  const [transitImage, setTransitImage] = useState(null);
 
   const [waterCoverage, setWaterCoverage] = useState(0);
   const [atmosphere, setAtmosphere] = useState(0);
-  const [temperature, setTemperature] = useState(20000);
+  const [temperature, setTemperature] = useState(0);
   const [oxygen, setOxygen] = useState(0);
   const [co2, setCo2] = useState(0);
-  const [no, setNo] = useState(20000);
+  const [no, setNo] = useState(0);
   const [albedo, setAlbedo] = useState(0);
   const [magnetosphere, setMagnetosphere] = useState(0);
   const [habitability] = useState(0);
 
+  //habitability function
+  const getHabitability = ({
+    waterCoverage,
+    atmosphere,
+    temperature,
+    magnetosphere,
+    orbitRadius,
+  }) => {
+    var L = waterCoverage / 100;
+    var S = 1;
+    var E = 1;
+    var C = 2;
+    var tot = 10;
 
-  const handleOrbitingBall = (newProps) => {
-    setOrbitingBall((prevProps) => ({
-      ...prevProps,
-      ...newProps,
-    }));
+    S += magnetosphere / 100;
+    S += atmosphere / 100;
+
+    if (orbitRadius >= 2.5 && orbitRadius <= 5) E += 2;
+
+    if (orbitRadius >= 5 && orbitRadius <= 10) E += 1;
+
+    if (temperature >= 200000 && temperature <= 400000) E += 1;
+
+    return (S + E + C + L) ** 0.25 / 10 ** 0.25;
   };
 
   const handleSunSizeChange = (event) => {
@@ -88,11 +108,6 @@ function App() {
 
   return (
     <>
-      <div className="button-container">
-        <button onClick={() => setModalOpen(true)}>Edit my planet</button>
-        <br></br>
-        <img src="./planet.gif" className="pwanet" />
-      </div>
       <div
         style={{
           display: "flex",
@@ -112,12 +127,15 @@ function App() {
             orbitSpeed={orbitSpeed}
             heat={heat}
           />
+          <div className="button-container">
+            <button onClick={() => setModalOpen(true)}>Edit my planet</button>
+            <br></br>
+            <img src="./planet.gif" className="pwanet" />
+          </div>
         </div>
-        <div style={{ marginLeft: "5%", width: "300px" }}>
-          <Result
-            habitability={habitability}
-          />
-        </div>
+        {/* <div style={{ marginLeft: "5%", width: "300px" }}>
+          <Result habitability={habitability} />
+        </div> */}
         <div style={{ flexGrow: 1 }}>
           <BallScene
             sunSize={sunSize}
@@ -126,6 +144,8 @@ function App() {
             orbitSpeed={orbitSpeed}
             heat={heat}
             waterCoverage={waterCoverage}
+            atmosphere={atmosphere}
+            magnetosphere={magnetosphere}
           />
         </div>
       </div>
