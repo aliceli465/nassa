@@ -129,17 +129,26 @@ function PlanetSidebar({ planet, handleInputChange }) {
       </div>
 
       <div className="control2">
-        <label htmlFor="co2">CO2 (% of atmosphere)&nbsp; 
-          <object className = "info"
-          onMouseEnter={() => setInfo(true, 5)}
-          onMouseLeave={() => setInfo(false, 0)}>
-          ⓘ 
-          </object> </label>
-          {isShown && showId == 5 && (
-            <span className = "pInfoBox">
-              The distance the planet is from its sun. On average the Earth is 1 AU (Astronomical Unit) away from our Sun!
-            </span>
-          )}
+        <label htmlFor="atmosphere">Atmosphere Thickness (%)</label>
+        <input
+          type="range"
+          id="atmosphere"
+          min="0"
+          max="100"
+          name="atmosphere" water
+          value={planet.atmosphere}
+          onChange={handleInputChange}
+        />
+        <input
+          type="number"
+          name="atmosphere"
+          value={planet.atmosphere}
+          onChange={handleInputChange}
+        />
+      </div>
+
+      <div className="control2">
+        <label htmlFor="co2">CO2 (% of atmosphere)</label>
         <input
           type="range"
           id="co2"

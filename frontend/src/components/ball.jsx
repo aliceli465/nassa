@@ -11,6 +11,7 @@ import sunImage from "../assets/sun.jpg";
 import planetImage from "../assets/planet.jpg";
 import normalImage from "../assets/normal.jpg";
 import waterImage from "../assets/wataa.webp";
+import atmosImage from "../assets/atmos.jpg";
 
 const vertexShader = `
 varying vec2 vUv;
@@ -64,12 +65,13 @@ const Ball = ({ size, heat }) => {
   );
 };
 
-export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
+export const OrbitingBall = ({ radius, size, speed, waterCoverage, atmosphere }) => {
   const meshRef = useRef();
   const ringRef = useRef();
   const planetTexture = useLoader(TextureLoader, planetImage);
   const normalTexture = useLoader(TextureLoader, normalImage);
   const waterTexture = useLoader(TextureLoader, waterImage);
+  const atmosphereTexture = useLoader(TextureLoader, atmosImage);
 
   const shaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
@@ -79,9 +81,10 @@ export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
         baseTexture: { value: planetTexture },
         waterTexture: { value: waterTexture },
         coverage: { value: waterCoverage / 100 }, // Normalize the coverage value
+        coverageAtmosphere: { value: atmosphere / 100 },
       },
     });
-  }, [planetTexture, waterTexture, waterCoverage]);
+  }, [planetTexture, waterTexture, waterCoverage, atmosphere, atmosphereTexture]);
 
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
@@ -107,7 +110,7 @@ export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
   );
 };
 
-const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
+const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat, waterCoverage }) => {
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -124,7 +127,7 @@ const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
         radius={orbitRadius}
         size={planetSize}
         speed={orbitSpeed}
-        tilt={0}
+        waterCoverage={waterCoverage}
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
@@ -138,6 +141,7 @@ export default function BallScene({
   orbitRadius,
   orbitSpeed,
   heat,
+  waterCoverage
 }) {
   return (
     <div style={{ marginTop: "100px" }}>
@@ -148,6 +152,7 @@ export default function BallScene({
           orbitRadius={orbitRadius}
           orbitSpeed={orbitSpeed}
           heat={heat}
+          waterCoverage={waterCoverage}
         />
       </Canvas>
     </div>
