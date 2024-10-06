@@ -18,6 +18,12 @@ function About() {
         atmosphere, and even to magnetic fields, each parameter plays a role in
         habitability and the transit light curve
       </p>
+
+      <p className="about-description">
+        For our tech stack, we used React, JavaScript, BATMAN, Python, and
+        PyTransit. Check out our sources tab for all the papers we used for
+        calculations
+      </p>
     </div>
   );
 }

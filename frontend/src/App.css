@@ -251,7 +251,6 @@ input[type="number"] {
   justify-content: center;
   align-items: center;
   /* Ensures it appears on top */
-  z-index: 1000;
 }
 
 .modal-content {

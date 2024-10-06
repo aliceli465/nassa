@@ -1,7 +1,7 @@
 // src/OrbitingBallModal.jsx
 import React, { useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitingBall } from "./ball";
+import { OrbitingBall, OrbitingBall2 } from "./ball";
 import { TextureLoader } from "three";
 
 import { OrbitControls } from "@react-three/drei";
@@ -54,25 +54,21 @@ const OrbitingBallModal = ({
             justifyContent: "space-between",
           }}
         >
-          <div style={{}}>
-            <Canvas style={{ height: "500px", width: "500px" }}>
-              <ambientLight intensity={0.5} />
-              <directionalLight position={[5, 5, 5]} intensity={1} />
-              <OrbitingBall
-                radius={radius}
-                size={size}
-                speed={speed}
-                waterCoverage={waterCoverage}
-                atmosphere={atmosphere}
-                magnetosphere={magnetosphere}
-              />
-              <OrbitControls /> {/* Add OrbitControls here */}
-            </Canvas>
-          </div>
+          <Canvas style={{ height: "500px", width: "500px" }}>
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[5, 5, 5]} intensity={1} />
+            <OrbitingBall2
+              size={size}
+              waterCoverage={waterCoverage}
+              atmosphere={atmosphere}
+              magnetosphere={magnetosphere}
+            />
+            <OrbitControls /> {/* Add OrbitControls here */}
+          </Canvas>
 
           <div className="planetRemote">
             {/* Slider for Water Coverage */}
-            <div style={{ margin: "1rem 0" }}>
+            <div style={{ margin: "1rem 0" }} className="slider-container">
               <label htmlFor="waterCoverage">
                 Water Coverage: {waterCoverage}%
               </label>

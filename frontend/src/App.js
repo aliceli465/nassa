@@ -59,7 +59,7 @@ function App() {
   const [no, setNo] = useState(0);
   const [albedo, setAlbedo] = useState(0);
   const [magnetosphere, setMagnetosphere] = useState(0);
-  const [habitability] = useState(0);
+  const [totalHabitabilityScore, setTotalHabitabilityScore] = useState(0);
 
   //habitability function
   const getHabitability = ({
@@ -84,7 +84,53 @@ function App() {
 
     if (temperature >= 200000 && temperature <= 400000) E += 1;
 
-    return (S + E + C + L) ** 0.25 / 10 ** 0.25;
+    return (((S + E + C + L) ** 0.25 / 10 ** 0.25) * 100).toFixed(2);
+  };
+
+  const calculateHabitabilityScore = () => {
+    // Simple logic for demonstration; replace with your actual logic
+    const score = getHabitability({
+      waterCoverage,
+      atmosphere,
+      temperature,
+      magnetosphere,
+      orbitRadius,
+    });
+    setTotalHabitabilityScore(score);
+  };
+
+  useEffect(() => {
+    calculateHabitabilityScore();
+  }, [waterCoverage, atmosphere, temperature, magnetosphere, orbitRadius]);
+
+  const Header = ({ habitabilityScore }) => {
+    return (
+      <header>
+        {/* Habitability Score Container */}
+        <div
+          style={{
+            position: "absolute",
+            top: "60px", // Adjust based on your nav height
+            right: "20px",
+            backgroundColor: "rgba(0, 0, 0, 0.8)", // Dark background
+            color: "#fff",
+            padding: "15px 20px", // More padding for a nicer look
+            borderRadius: "10px", // More rounded corners
+            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.5)", // Deeper shadow for depth
+            backdropFilter: "blur(5px)", // Blur effect for the background
+            border: "2px solid rgba(255, 255, 255, 0.2)", // Subtle white border
+            textAlign: "center", // Center the text
+          }}
+        >
+          <h3 style={{ margin: "0", fontSize: "1rem" }}>
+            Total Habitability Score:
+          </h3>
+          <h2 style={{ margin: "5px 0 0", fontSize: "1rem" }}>
+            {habitabilityScore}%
+          </h2>
+        </div>
+      </header>
+    );
   };
 
   const handleSunSizeChange = (event) => {
@@ -174,6 +220,7 @@ function App() {
           setAlbedo={setAlbedo}
         />
       )}
+      <Header habitabilityScore={totalHabitabilityScore} />
     </>
   );
 }

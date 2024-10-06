@@ -179,6 +179,87 @@ export const OrbitingBall = ({
   );
 };
 
+export const OrbitingBall2 = ({
+  size,
+  waterCoverage,
+  atmosphere,
+  magnetosphere,
+}) => {
+  const meshRef = useRef();
+  const ringRef = useRef();
+  const planetTexture = useLoader(TextureLoader, planetImage);
+  const normalTexture = useLoader(TextureLoader, normalImage);
+  const waterTexture = useLoader(TextureLoader, waterImage);
+  const atmosphereTexture = useLoader(TextureLoader, atmosImage);
+
+  const shaderMaterial = useMemo(() => {
+    const opacity = getOpacityFromAtmosphere(atmosphere);
+    console.log("opacity is: ", opacity);
+    return new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms: {
+        baseTexture: { value: planetTexture },
+        waterTexture: { value: waterTexture },
+        coverage: { value: waterCoverage / 100 }, // Normalize the coverage value
+        coverageAtmosphere: { value: atmosphere / 100 },
+        opacity: { value: opacity }, // Add opacity as a uniform
+      },
+      transparent: true,
+    });
+  }, [
+    planetTexture,
+    waterTexture,
+    waterCoverage,
+    atmosphere,
+    atmosphereTexture,
+  ]);
+
+  const createMagneticRings = () => {
+    const lines = [];
+    const baseLineWidth = magnetosphere === 10 ? 1 : 0.5; // Increase thickness for weak fields
+    const baseLineCount =
+      magnetosphere === 10 ? 2 : Math.floor(magnetosphere / 10); // More lines for weak field
+    const lineColor = magnetosphere === 10 ? 0x66ffff : 0x00ffff; // Brighter color for weak fields
+
+    for (let i = 0; i < baseLineCount; i++) {
+      const lineRadius = size + (i + 1) * 0.5;
+      const curve = new THREE.EllipseCurve(
+        0,
+        0,
+        lineRadius,
+        lineRadius * 0.8,
+        0,
+        2 * Math.PI,
+        false,
+        Math.random() * Math.PI
+      );
+      const points = curve.getPoints(50);
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+      lines.push(
+        <line key={i}>
+          <bufferGeometry attach="geometry" {...geometry} />
+          <lineBasicMaterial color={lineColor} linewidth={baseLineWidth} />{" "}
+          {/* Adjusted line thickness and color */}
+        </line>
+      );
+    }
+    return lines;
+  };
+
+  return (
+    <>
+      {/* Orbiting Planet  + rings*/}
+      <mesh ref={meshRef} position={[0, 0, 0]}>
+        <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
+        <primitive object={shaderMaterial} attach="material" />{" "}
+        {createMagneticRings()}
+      </mesh>
+    </>
+  );
+};
+
 const Scene = ({
   sunSize,
   planetSize,
