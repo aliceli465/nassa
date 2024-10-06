@@ -5,7 +5,12 @@ import Sidebar from "./components/sidebar";
 import "./App.css";
 // import { ReactDOM } from "react-dom/client";
 
-import { BrowserRouter, BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Navbar from "./components/Navbar"; // You can omit the ".jsx" in most cases.
 import OrbitingBallModal from "./components/justBall";
 function App() {
@@ -53,7 +58,6 @@ function App() {
 
   const Home = () => <h1>Home Page</h1>;
   const About = () => <h1>About Page</h1>;
-  const Sources = () => <h1>Sources & References</h1>;
   const NotFoundPage = () => <h1>404 - Page Not Found</h1>;
 
   return (
@@ -73,7 +77,6 @@ function App() {
           </Navbar>
         </BrowserRouter>
       </div>
-
     </>
   );
 }
