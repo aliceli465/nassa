@@ -24,6 +24,9 @@ function App() {
   const [waterCoverage, setWaterCoverage] = useState(0);
   const [atmosphere, setAtmosphere] = useState(0);
   const [temperature, setTemperature] = useState(20000);
+  const [oxygen, setOxygen] = useState(0);
+  const [co2, setCo2] = useState(0);
+  const [no, setNo] = useState(20000);
 
 
   const handleOrbitingBall = (newProps) => {
@@ -124,6 +127,12 @@ function App() {
           setTemperature={setTemperature}
           atmosphere={atmosphere}
           setAtmosphere={setAtmosphere}
+          no={no}
+          setNo={setNo}
+          oxygen={oxygen}
+          setOxygen={setOxygen}
+          co2={co2}
+          setCo2={setCo2}
         />
       )}
     </>

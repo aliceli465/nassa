@@ -7,7 +7,7 @@ import { TextureLoader } from "three";
 import { OrbitControls } from "@react-three/drei";
 
 const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, setWaterCoverage, temperature, setTemperature,
-  atmosphere, setAtmosphere }) => {
+  atmosphere, setAtmosphere, no, setNo, oxygen, setOxygen, co2, setCo2 }) => {
   // const [waterCoverage, setWaterCoverage] = useState(0);
 
   return (
@@ -17,7 +17,7 @@ const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, s
           Save
         </button>
         {/* Slider for Water Coverage */}
-        <div style={{ margin: "1rem 0" }}>
+        <div style={{ margin: "1rem 0" }} className="slider-container">
           <label htmlFor="waterCoverage">
             Water Coverage: {waterCoverage}%
           </label>
@@ -35,8 +35,8 @@ const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, s
           </select>
         </div>
         <div style={{ margin: "1rem 0" }}>
-          <label htmlFor="waterCoverage">
-            Water Coverage: {waterCoverage}%
+          <label htmlFor="temperature">
+            Temperature: {temperature}%
           </label>
           <select
             id="temperature"
@@ -53,7 +53,7 @@ const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, s
         </div>
         <div style={{ margin: "1rem 0" }}>
           <label htmlFor="Atmosphere Thickness">
-            Atmosphere Thickness: {waterCoverage}%
+            Atmosphere Thickness: {atmosphere}%
           </label>
           <select
             id="atmosphere"
@@ -62,11 +62,66 @@ const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, s
             style={{ marginLeft: "10px" }}
           >
             <option value={0}>0</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+            <option value={40}>40</option>
+            <option value={50}>50</option>
+            <option value={60}>60</option>
+            <option value={70}>70</option>
+            <option value={80}>80</option>
+          </select>
+        </div>
+        <div style={{ margin: "1rem 0" }}>
+          <label htmlFor="no%">
+            Nitrogen %: {no}%
+          </label>
+          <select
+            id="no"
+            value={no}
+            onChange={(e) => setNo(Number(e.target.value))}
+            style={{ marginLeft: "10px" }}
+          >
+            <option value={0}>0</option>
             <option value={25}>25</option>
             <option value={50}>50</option>
             <option value={75}>75</option>
             <option value={100}>100</option>
           </select>
+        </div>
+        <div style={{ margin: "1rem 0" }}>
+          <label htmlFor="oxygen">
+            Oxygen %: {oxygen}%
+          </label>
+          <select
+            id="oxygen"
+            value={oxygen}
+            onChange={(e) => setOxygen(Number(e.target.value))}
+            style={{ marginLeft: "10px" }}
+          >
+            <option value={0}>0</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={75}>75</option>
+            <option value={100}>100</option>
+          </select>
+          <div style={{ margin: "1rem 0" }}>
+            <label htmlFor="Carbon Dioxide">
+              Carbon Dioxide %: {co2}%
+            </label>
+            <select
+              id="co2"
+              value={co2}
+              onChange={(e) => setCo2(Number(e.target.value))}
+              style={{ marginLeft: "10px" }}
+            >
+              <option value={0}>0</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={75}>75</option>
+              <option value={100}>100</option>
+            </select>
+          </div>
         </div>
         <Canvas style={{ height: "500px", width: "500px" }}>
           <ambientLight intensity={0.5} />
