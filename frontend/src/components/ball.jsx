@@ -12,9 +12,8 @@ const Ball = ({ size }) => {
   );
 };
 
-const OrbitingBall = ({ radius, size }) => {
+const OrbitingBall = ({ radius, size, speed }) => {
   const meshRef = useRef();
-  const speed = 0.5; // Speed of orbiting
 
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
@@ -31,26 +30,36 @@ const OrbitingBall = ({ radius, size }) => {
   );
 };
 
-const Scene = ({ size, orbitingSize, orbitRadius }) => {
+const Scene = ({ size, orbitingSize, orbitRadius, orbitSpeed }) => {
   return (
     <>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       <Ball size={size} />
-      <OrbitingBall radius={orbitRadius} size={orbitingSize} />{" "}
+      <OrbitingBall
+        radius={orbitRadius}
+        size={orbitingSize}
+        speed={orbitSpeed}
+      />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
     </>
   );
 };
 
-export default function BallScene({ size, orbitingSize, orbitRadius }) {
+export default function BallScene({
+  size,
+  orbitingSize,
+  orbitRadius,
+  orbitSpeed,
+}) {
   return (
     <Canvas style={{ height: "400px" }}>
       <Scene
         size={size}
         orbitingSize={orbitingSize}
         orbitRadius={orbitRadius}
+        orbitSpeed={orbitSpeed}
       />
     </Canvas>
   );

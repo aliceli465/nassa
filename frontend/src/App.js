@@ -6,6 +6,7 @@ function App() {
   const [size, setSize] = useState(1); // Size of the larger ball
   const [orbitingSize, setOrbitingSize] = useState(0.2); // Size of the smaller ball
   const [orbitRadius, setOrbitRadius] = useState(2); // Orbit radius
+  const [orbitSpeed, setOrbitSpeed] = useState(0.5); // Speed of orbiting ball
 
   const handleSizeChange = (event) => {
     setSize(event.target.value);
@@ -19,6 +20,10 @@ function App() {
     setOrbitRadius(event.target.value);
   };
 
+  const handleOrbitSpeedChange = (event) => {
+    setOrbitSpeed(event.target.value);
+  };
+
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Three.js Ball in React</h1>
@@ -26,6 +31,7 @@ function App() {
         size={size}
         orbitingSize={orbitingSize}
         orbitRadius={orbitRadius}
+        orbitSpeed={orbitSpeed}
       />
       <div>
         <input
@@ -59,6 +65,17 @@ function App() {
           onChange={handleOrbitRadiusChange}
         />
         <p>Orbit Radius (Distance between balls): {orbitRadius}</p>
+      </div>
+      <div>
+        <input
+          type="range"
+          min="0.1"
+          max="5"
+          step="0.1"
+          value={orbitSpeed}
+          onChange={handleOrbitSpeedChange}
+        />
+        <p>Orbit Speed: {orbitSpeed}</p>
       </div>
     </div>
   );
