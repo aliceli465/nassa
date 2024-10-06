@@ -84,6 +84,42 @@ const getOpacityFromAtmosphere = (atmosphere) => {
       return 1; // Fallback value if needed
   }
 };
+
+export const getHabitability = ({
+  waterCoverage,
+  atmosphere,
+  temperature,
+  oxygen,
+  co2,
+  no,
+  albedo,
+  magnetosphere,
+  orbitRadius,
+  habitability
+}) => {
+
+  var L = (waterCoverage / 100);
+  var S = 1;
+  var E = 1;
+  var C = 2;
+  var tot = 10
+
+  S += (magnetosphere / 100)
+  S += (atmosphere / 100)
+
+  if (orbitRadius >= 2.5 && orbitRadius <= 5)
+    E += 2;
+
+  if (orbitRadius >= 5 && orbitRadius <= 10)
+    E += 1;
+
+  if (temperature >= 200000 && temperature <= 400000)
+    E += 1;
+
+  return ((S + E + C + L) ** (0.25)) / (10 ** 0.25)
+
+};
+
 export const OrbitingBall = ({
   radius,
   size,
@@ -210,7 +246,7 @@ const Scene = ({
     );
     return lines;
   }
-  
+
   return (
     <>
       <ambientLight intensity={0.5} />
