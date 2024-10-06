@@ -21,7 +21,12 @@ const Ball = ({ size, heat }) => {
     <>
       <mesh ref={meshRef} castShadow receiveShadow position={[0,0,0]}>
         <sphereGeometry args={[size, 32, 32]} />
-        <meshStandardMaterial map={sunTexture}/>
+        <meshStandardMaterial 
+          map={sunTexture} // Use the texture for the sun
+          emissive={interpolateColor(heat)} // Set emissive color based on heat
+          emissiveIntensity={0.3} // Lower intensity to not overpower the texture
+          transparent={true} 
+        />
       </mesh>
     </>
   );
@@ -54,10 +59,10 @@ const OrbitingBall = ({ radius, size, speed, tilt}) => {
 const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
   return (
     <>
-      <ambientLight intensity={0.1} />
+      <ambientLight intensity={0.5} />
       <directionalLight
-        position={[5, 5, 5]}
-        intensity={2}
+        position={[0,0,0]}
+        intensity={19}
         castShadow
         shadow-mapSize-width={1024} // Increase shadow resolution
         shadow-mapSize-height={1024} // Increase shadow resolution
@@ -72,14 +77,7 @@ const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
-      {/* Bloom effect for glowing effect */}
-      <EffectComposer>
-        <Bloom
-          intensity={1.5} // Adjust intensity for desired glow effect
-          luminanceThreshold={0.2} // Threshold for applying bloom
-          luminanceSmoothing={0.9} // Smoothing to control how much bloom is applied
-        />
-      </EffectComposer>
+      
     </>
   );
 };
