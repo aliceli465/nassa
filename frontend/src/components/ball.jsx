@@ -72,14 +72,16 @@ export default function BallScene({
   heat,
 }) {
   return (
-    <Canvas style={{ height: "400px" }}>
-      <Scene
-        sunSize={sunSize}
-        planetSize={planetSize}
-        orbitRadius={orbitRadius}
-        orbitSpeed={orbitSpeed}
-        heat={heat}
-      />
-    </Canvas>
+    <div style={{ marginTop: "100px" }}>
+      <Canvas style={{ height: "500px" }}>
+        <Scene
+          sunSize={sunSize}
+          planetSize={planetSize}
+          orbitRadius={orbitRadius}
+          orbitSpeed={orbitSpeed}
+          heat={heat}
+        />
+      </Canvas>
+    </div>
   );
 }
