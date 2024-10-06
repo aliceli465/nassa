@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Modal from "react-modal";
 
 function Sidebar({
   handleSizeChange,
@@ -14,11 +15,21 @@ function Sidebar({
 }) {
   const [isShown, setIsShown] = useState(false);
   const [showId, setId] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   function setInfo(state, id) {
     setIsShown(state);
     setId(id);
   }
+
+  const handleGenerateGraph = async () => {
+    setLoading(true); // Set loading state
+    // Simulate an API call or some processing time
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // 2 seconds delay
+    setLoading(false); // Reset loading state
+    setModalOpen(true); // Open modal
+  };
 
   return (
     <div className="sidebar">
@@ -157,6 +168,42 @@ function Sidebar({
             </span>
           )}
         </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <button onClick={handleGenerateGraph} className="genButton">
+          {loading ? "Generating..." : "Generate Transit Graph"}
+        </button>
+
+        {/* Modal for displaying the graph */}
+        <Modal
+          isOpen={modalOpen}
+          onRequestClose={() => setModalOpen(false)}
+          contentLabel="Transit Light Curve"
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img src="./transit_light_curve.png" alt="Transit Light Curve" />
+            <br />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
+        </Modal>
       </div>
     </div>
   );

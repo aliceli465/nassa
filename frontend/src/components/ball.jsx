@@ -2,7 +2,7 @@
 import React, { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, useHelper } from "@react-three/drei";
-import { interpolateColor } from "../utils/colorUtils";
+import { interpolateColor, interpolate2 } from "../utils/colorUtils";
 import { ShaderMaterial } from "three";
 import * as THREE from "three";
 import { TextureLoader, DoubleSide } from "three";
@@ -91,6 +91,7 @@ export const OrbitingBall = ({
   waterCoverage,
   atmosphere,
   magnetosphere,
+  temperature,
 }) => {
   const meshRef = useRef();
   const ringRef = useRef();
@@ -98,6 +99,7 @@ export const OrbitingBall = ({
   const normalTexture = useLoader(TextureLoader, normalImage);
   const waterTexture = useLoader(TextureLoader, waterImage);
   const atmosphereTexture = useLoader(TextureLoader, atmosImage);
+  const color = interpolate2(temperature);
 
   const shaderMaterial = useMemo(() => {
     const opacity = getOpacityFromAtmosphere(atmosphere);
@@ -187,6 +189,7 @@ const Scene = ({
   waterCoverage,
   atmosphere,
   magnetosphere,
+  temperature,
 }) => {
   return (
     <>
@@ -207,6 +210,7 @@ const Scene = ({
         waterCoverage={waterCoverage}
         atmosphere={atmosphere}
         magnetosphere={magnetosphere}
+        temperature={temperature}
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
@@ -223,6 +227,7 @@ export default function BallScene({
   waterCoverage,
   atmosphere,
   magnetosphere,
+  temperature,
 }) {
   return (
     <div style={{ marginTop: "100px" }}>
@@ -236,6 +241,7 @@ export default function BallScene({
           waterCoverage={waterCoverage}
           atmosphere={atmosphere}
           magnetosphere={magnetosphere}
+          temperature={temperature}
         />
       </Canvas>
     </div>

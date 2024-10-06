@@ -37,7 +37,7 @@ const styles = {
     padding: "1rem",
     zIndex: 1000,
     position: "relative", // This helps with positioning
-    marginBottom: "5%",
+    marginBottom: "2%",
   },
   navItems: {
     display: "flex",

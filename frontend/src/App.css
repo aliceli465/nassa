@@ -219,12 +219,15 @@ input[type="number"] {
 }
 
 .button-container {
-  position: absolute; /* Absolute positioning */
-  top: 20px; /* Distance from the top */
-  right: 20px; /* Distance from the right */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   text-align: center;
   transition: transform 0.3s ease;
   z-index: 1000;
+  margin-left: 22%;
+  margin-top: 3%;
 }
 
 .button-container:hover {
@@ -446,4 +449,12 @@ input[type="range"]::-webkit-slider-thumb {
 
 .about-button:active {
   background-color: #e69500; /* Even darker on click */
+}
+
+.genButton {
+  transition: transform 0.3s ease;
+}
+
+.genButton:hover {
+  transform: scale(1.1); /* Scale to 1.1 on hover */
 }
