@@ -57,8 +57,13 @@ function App() {
       <div style={{ textAlign: "center" }}>
         <h1>No Diddy</h1>
       </div>
-      <div style={{ display: "flex", alignItems: "flex-start" }}>
-        <div style={{ flex: 1, padding: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <div style={{ marginLeft: "5%", width: "300px" }}>
           <Sidebar
             handleSizeChange={handleSunSizeChange}
             handleOrbitingSizeChange={handlePlanetSizeChange}
@@ -72,7 +77,7 @@ function App() {
             heat={heat}
           />
         </div>
-        <div style={{ flex: 2 }}>
+        <div style={{ flexGrow: 1 }}>
           <BallScene
             sunSize={sunSize}
             planetSize={planetSize}
