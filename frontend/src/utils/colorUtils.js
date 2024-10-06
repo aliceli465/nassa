@@ -7,12 +7,8 @@ export const interpolateColor = (value) => {
   // Map the clamped value to a range from 0 to 1
   const normalizedValue = clampedValue / 1000; // Range from 0 to 1
 
-  // Create colors for yellow and blue
-  const yellow = new THREE.Color(0xffff00); // Yellow for low temperatures
-  const blue = new THREE.Color(0x0000ff); // Blue for high temperatures
-
-  // Interpolate between yellow and blue based on the normalized value
-  return yellow.lerp(blue, normalizedValue);
+  //(255, 0, 0) to (255, 255, 0)
+  return new THREE.Color(1, normalizedValue * 3, 0);
 };
 
 export const interpolate2 = (value) => {
