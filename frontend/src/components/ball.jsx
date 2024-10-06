@@ -161,13 +161,9 @@ export const OrbitingBall = ({
     }
     return lines;
   };
+
   return (
     <>
-      {/* Orbit Path */}
-      <mesh ref={ringRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[radius - 0.01, radius + 0.01, 64]} />{" "}
-        <meshStandardMaterial color="white" side={DoubleSide} />
-      </mesh>
       {/* Orbiting Planet  + rings*/}
       <mesh ref={meshRef} position={[0, 0, 0]}>
         <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
@@ -188,6 +184,33 @@ const Scene = ({
   atmosphere,
   magnetosphere,
 }) => {
+  const createOrbitPath = (radius) => {
+    const lines = [];
+    const lineColor = magnetosphere === 10 ? 0x66ffff : 0x00ffff;
+    const curve = new THREE.EllipseCurve(
+      0,
+      0,
+      radius,
+      radius,
+      0,
+      2 * Math.PI,
+      false,
+      0
+    );
+    const points = curve.getPoints(50);
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    lines.push(
+      <group rotation={[Math.PI / 2, 0, 0]} key={`orbit-path-${radius}`}>
+        <line>
+          <bufferGeometry attach="geometry" {...geometry} />
+          <lineBasicMaterial color={lineColor} linewidth={5} />{" "}
+          {/* Adjusted line thickness and color */}
+        </line>
+      </group>
+    );
+    return lines;
+  }
+  
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -199,6 +222,7 @@ const Scene = ({
         shadow-mapSize-height={1024} // Increase shadow resolution
         shadow-bias={-0.001}
       />
+      {createOrbitPath(orbitRadius)}
       <Ball size={sunSize} heat={heat} />
       <OrbitingBall
         radius={orbitRadius}
