@@ -7,6 +7,8 @@ function App() {
   const [planetSize, setPlanetSize] = useState(0.2); // sunSize of the smaller ball
   const [orbitRadius, setOrbitRadius] = useState(2); // Orbit radius
   const [orbitSpeed, setOrbitSpeed] = useState(0.5); // Speed of orbiting ball
+  const [heat, setHeat] = useState(0); // Heat level for color change of the sun
+  const [tilt, setTilt] = useState(0); // New tilt state
 
   const handleSunSizeChange = (event) => {
     setSunSize(event.target.value);
@@ -24,6 +26,14 @@ function App() {
     setOrbitSpeed(event.target.value);
   };
 
+  const handleHeatChange = (event) => {
+    setHeat(event.target.value);
+  };
+
+  const handleTiltChange = (event) => {
+    setTilt(event.target.value);
+  };
+
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Three.js Ball in React</h1>
@@ -32,6 +42,8 @@ function App() {
         planetSize={planetSize}
         orbitRadius={orbitRadius}
         orbitSpeed={orbitSpeed}
+        heat={heat}
+        tilt={tilt}
       />
       <div>
         <input
@@ -76,6 +88,27 @@ function App() {
           onChange={handleOrbitSpeedChange}
         />
         <p>Orbit Speed: {orbitSpeed}</p>
+      </div>
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={heat}
+          onChange={handleHeatChange}
+        />
+        <p>Heat (Color of the sun): {heat}</p>
+      </div>
+      <div>
+        <label>Tilt: </label>
+        <input
+          type="range"
+          min="0"
+          max="1" // Adjust range as needed
+          value={tilt}
+          onChange={(e) => setTilt(e.target.value)}
+        />
       </div>
     </div>
   );
