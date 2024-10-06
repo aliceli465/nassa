@@ -9,6 +9,7 @@ function App() {
   const [orbitRadius, setOrbitRadius] = useState(2); // Orbit radius
   const [orbitSpeed, setOrbitSpeed] = useState(0.5); // Speed of orbiting ball
   const [heat, setHeat] = useState(0); // Heat level for color change of the sun
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleSunSizeChange = (event) => {
     setSunSize(event.target.value);
@@ -33,7 +34,12 @@ function App() {
   return (
     <>
       <div style={{ textAlign: "center" }}>
-        <h1>No Diddy</h1>
+        <h2>nassa</h2>
+      </div>
+      <div className="button-container">
+        <button onClick={() => setModalOpen(true)}>Edit my planet</button>
+        <br></br>
+        <img src="./planet.gif" className="pwanet" />
       </div>
       <div
         style={{
