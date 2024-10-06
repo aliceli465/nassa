@@ -78,7 +78,7 @@ export default function BallScene({
 }) {
   return (
     <div style={{ marginTop: "100px" }}>
-      <Canvas style={{ height: "500px" }}>
+      <Canvas style={{ height: "100vh", width: "100vw" }}>
         <Scene
           sunSize={sunSize}
           planetSize={planetSize}
