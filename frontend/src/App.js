@@ -21,6 +21,8 @@ function App() {
     windspeed: 0,
   });
 
+  const [waterCoverage, setWaterCoverage] = useState(0);
+
   const handleOrbitingBall = (newProps) => {
     setOrbitingBall((prevProps) => ({
       ...prevProps,
@@ -116,6 +118,7 @@ function App() {
             orbitRadius={orbitRadius}
             orbitSpeed={orbitSpeed}
             heat={heat}
+            waterCoverage={waterCoverage}
           />
         </div>
       </div>
@@ -125,6 +128,8 @@ function App() {
           size={planetSize * 5}
           speed={0}
           setModalOpen={setModalOpen}
+          waterCoverage={waterCoverage}
+          setWaterCoverage={setWaterCoverage}
         />
       )}
     </>

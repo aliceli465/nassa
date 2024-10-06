@@ -107,7 +107,7 @@ export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
   );
 };
 
-const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
+const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat, waterCoverage }) => {
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -124,7 +124,7 @@ const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
         radius={orbitRadius}
         size={planetSize}
         speed={orbitSpeed}
-        tilt={0}
+        waterCoverage={waterCoverage}
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
@@ -138,6 +138,7 @@ export default function BallScene({
   orbitRadius,
   orbitSpeed,
   heat,
+  waterCoverage
 }) {
   return (
     <div style={{ marginTop: "100px" }}>
@@ -148,6 +149,7 @@ export default function BallScene({
           orbitRadius={orbitRadius}
           orbitSpeed={orbitSpeed}
           heat={heat}
+          waterCoverage={waterCoverage}
         />
       </Canvas>
     </div>
