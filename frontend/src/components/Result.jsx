@@ -4,7 +4,7 @@ function Result({
     habitability
 }) {
     return (
-        <div className="sidebar">
+        <div className="sidebar right">
             <h2 className="title">Habitability</h2>
             <div className="slider-container">
                 <div className="slider">
