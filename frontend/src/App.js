@@ -48,14 +48,28 @@ function App() {
     setHeat(event.target.value);
   };
 
-  const Home = () => <h1>Home Page</h1>;
-  const About = () => <h1>About Page</h1>;
-  const Sources = () => <h1>Sources & References</h1>;
+  const Home = () => (
+    <div>
+      <h1>Home Page</h1>
+      <p>Welcome to the home page!</p>
+    </div>
+  );
+  const About = () => (
+    <div>
+      <h1>About Page</h1>
+      <p>Welcome to the about page!</p>
+    </div>
+  );
+  const Sources = () => (
+    <div>
+      <h1>Sources Page</h1>
+      <p>Welcome to the sources page!</p>
+    </div>
+  );
   const NotFoundPage = () => <h1>404 - Page Not Found</h1>;
 
   return (
     <>
-      <div>
         <Router>
           <Navbar>
             <div style={{ padding: "2rem" }}>
@@ -69,7 +83,6 @@ function App() {
             </div>
           </Navbar>
         </Router>
-      </div>
 
       <div className="button-container">
         <button onClick={() => setModalOpen(true)}>Edit my planet</button>
