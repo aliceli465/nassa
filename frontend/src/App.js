@@ -31,7 +31,7 @@ function App() {
   };
 
   return (
-    <>
+    <div className="App">
       <div style={{ textAlign: "center" }}>
         <h1>No Diddy</h1>
       </div>
@@ -60,7 +60,7 @@ function App() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
