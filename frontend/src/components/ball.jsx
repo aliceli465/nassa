@@ -40,7 +40,7 @@ const OrbitingBall = ({ radius, size, speed }) => {
   );
 };
 
-const Scene = ({ size, orbitingSize, orbitRadius, orbitSpeed, heat }) => {
+const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
   return (
     <>
       <ambientLight intensity={0.1} />
@@ -52,7 +52,7 @@ const Scene = ({ size, orbitingSize, orbitRadius, orbitSpeed, heat }) => {
         shadow-mapSize-height={1024} // Increase shadow resolution
         shadow-bias={-0.001}
       />
-      <Ball size={size} heat={heat} />
+      <Ball size={sunSize} heat={heat} />
       <OrbitingBall
         radius={orbitRadius}
         size={planetSize}

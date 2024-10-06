@@ -38,13 +38,13 @@ function App() {
       <div style={{ display: "flex", alignItems: "flex-start" }}>
         <div style={{ flex: 1, padding: "20px" }}>
           <Sidebar
-            handleSizeChange={handleSizeChange}
-            handleOrbitingSizeChange={handleOrbitingSizeChange}
+            handleSizeChange={handleSunSizeChange}
+            handleOrbitingSizeChange={handlePlanetSizeChange}
             handleOrbitRadiusChange={handleOrbitRadiusChange}
             handleOrbitSpeedChange={handleOrbitSpeedChange}
             handleHeatChange={handleHeatChange}
-            size={size}
-            orbitingSize={orbitingSize}
+            size={sunSize}
+            orbitingSize={planetSize}
             orbitRadius={orbitRadius}
             orbitSpeed={orbitSpeed}
             heat={heat}
@@ -52,8 +52,8 @@ function App() {
         </div>
         <div style={{ flex: 2 }}>
           <BallScene
-            size={size}
-            orbitingSize={orbitingSize}
+            sunSize={sunSize}
+            planetSize={planetSize}
             orbitRadius={orbitRadius}
             orbitSpeed={orbitSpeed}
             heat={heat}
