@@ -4,8 +4,8 @@ import BallScene from "./components/ball";
 import Sidebar from "./components/sidebar";
 import "./App.css";
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar'; // You can omit the ".jsx" in most cases.
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar"; // You can omit the ".jsx" in most cases.
 
 function App() {
   const [sunSize, setSunSize] = useState(1); // sunSize of the larger ball
@@ -42,23 +42,22 @@ function App() {
 
   return (
     <>
-    <div>
-      <Router>
-      <Navbar>
-      <div style={{ padding: '2rem' }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/sources" element={<Sources />} />
-          <Route path="*" element={<NotFoundPage />} />  {/* Catch-all route */}
-        </Routes>
+      <div>
+        <Router>
+          <Navbar>
+            <div style={{ padding: "2rem" }}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/sources" element={<Sources />} />
+                <Route path="*" element={<NotFoundPage />} />{" "}
+                {/* Catch-all route */}
+              </Routes>
+            </div>
+          </Navbar>
+        </Router>
       </div>
-      </Navbar>
-    </Router>
-    </div>
-      <div style={{ textAlign: "center" }}>
-        <h2>nassa</h2>
-      </div>
+
       <div className="button-container">
         <button onClick={() => setModalOpen(true)}>Edit my planet</button>
         <br></br>
