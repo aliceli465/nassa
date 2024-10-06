@@ -65,7 +65,14 @@ const Ball = ({ size, heat }) => {
     <>
       <mesh ref={meshRef} castShadow receiveShadow position={[0, 0, 0]}>
         <sphereGeometry args={[size, 32, 32]} />
-        <meshStandardMaterial map={sunTexture} />
+        <meshStandardMaterial 
+          map={sunTexture} 
+          emissive={interpolateColor(Math.max(0, heat))} 
+          emissiveIntensity={0.2
+            
+          } 
+        />
+
       </mesh>
     </>
   );
