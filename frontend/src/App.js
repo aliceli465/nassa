@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import BallScene from "./components/ball";
 import Sidebar from "./components/sidebar";
+import Result from "./components/Result";
 import "./App.css";
 import About from "./pages/about"
 import Sources from "./pages/sources"
@@ -16,8 +17,8 @@ function Index() {
 
     return (
     <>
-        <Router>
-      <div>
+      <Router>
+        <div>
           <Navbar />
             <div style={{ padding: "2rem" }}>
                         {/* <h1>hi</h1> */}
@@ -56,6 +57,9 @@ function App() {
   const [oxygen, setOxygen] = useState(0);
   const [co2, setCo2] = useState(0);
   const [no, setNo] = useState(20000);
+  const [albedo, setAlbedo] = useState(0);
+  const [magnetosphere, setMagnetosphere] = useState(0);
+  const [habitability] = useState(0);
 
 
   const handleOrbitingBall = (newProps) => {
@@ -86,7 +90,7 @@ function App() {
   };
 
   return (
-  <>
+    <>
       <div className="button-container">
         <button onClick={() => setModalOpen(true)}>Edit my planet</button>
         <br></br>
@@ -110,6 +114,11 @@ function App() {
             orbitRadius={orbitRadius}
             orbitSpeed={orbitSpeed}
             heat={heat}
+          />
+        </div>
+        <div style={{ marginLeft: "5%", width: "300px" }}>
+          <Result
+            habitability={habitability}
           />
         </div>
         <div style={{ flexGrow: 1 }}>
@@ -141,6 +150,10 @@ function App() {
           setOxygen={setOxygen}
           co2={co2}
           setCo2={setCo2}
+          magnetosphere={magnetosphere}
+          setMagnetosphere={setMagnetosphere}
+          albedo={albedo}
+          setAlbedo={setAlbedo}
         />
       )}
     </>

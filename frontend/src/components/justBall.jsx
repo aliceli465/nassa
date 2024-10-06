@@ -7,7 +7,7 @@ import { TextureLoader } from "three";
 import { OrbitControls } from "@react-three/drei";
 
 const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, setWaterCoverage, temperature, setTemperature,
-  atmosphere, setAtmosphere, no, setNo, oxygen, setOxygen, co2, setCo2 }) => {
+  atmosphere, setAtmosphere, no, setNo, oxygen, setOxygen, co2, setCo2, magnetosphere, setMagnetosphere, albedo, setAlbedo }) => {
   // const [waterCoverage, setWaterCoverage] = useState(0);
 
   return (
@@ -122,6 +122,40 @@ const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, s
               <option value={100}>100</option>
             </select>
           </div>
+          <div style={{ margin: "1rem 0" }}>
+            <label htmlFor="Albedo">
+              Albedo %: {albedo}%
+            </label>
+            <select
+              id="albedo"
+              value={albedo}
+              onChange={(e) => setAlbedo(Number(e.target.value))}
+              style={{ marginLeft: "10px" }}
+            >
+              <option value={0}>0</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={75}>75</option>
+              <option value={100}>100</option>
+            </select>
+          </div>
+          <div style={{ margin: "1rem 0" }}>
+            <label htmlFor="Magnetosphere">
+              Magnetosphere %: {magnetosphere}%
+            </label>
+            <select
+              id="magnetosphere"
+              value={magnetosphere}
+              onChange={(e) => setMagnetosphere(Number(e.target.value))}
+              style={{ marginLeft: "10px" }}
+            >
+              <option value={0}>0</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={75}>75</option>
+              <option value={100}>100</option>
+            </select>
+          </div>
         </div>
         <Canvas style={{ height: "500px", width: "500px" }}>
           <ambientLight intensity={0.5} />
@@ -135,7 +169,7 @@ const OrbitingBallModal = ({ radius, size, speed, setModalOpen, waterCoverage, s
           <OrbitControls /> {/* Add OrbitControls here */}
         </Canvas>
       </div>
-    </div>
+    </div >
   );
 };
 
