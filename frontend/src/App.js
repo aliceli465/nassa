@@ -19,8 +19,7 @@ function Index() {
       <Router>
         <div>
           <Navbar />
-          <div style={{ padding: "2rem" }}>
-            <h1>hi</h1>
+          <div style={{ padding: "0.25rem" }}>
             <Routes>
               <Route exact path="/" element={<App />} />
               <Route path="/About" element={<About />} />
@@ -28,8 +27,6 @@ function Index() {
               <Route path="*" element={<NotFound />} />
               {/* Catch-all route */}
             </Routes>
-
-            <h1>hi2</h1>
           </div>
         </div>
       </Router>
