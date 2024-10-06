@@ -3,9 +3,13 @@ import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { interpolateColor } from "../utils/colorUtils";
+<<<<<<< HEAD
 import { TextureLoader } from "three";
 import { ShaderMaterial } from "three";
 import * as THREE from "three";
+=======
+import { TextureLoader, DoubleSide } from "three";
+>>>>>>> 47411bca4cbfc14ab1c2a76fd9597c9de7d2b53c
 import { EffectComposer, Bloom } from "@react-three/postprocessing"; // For bloom effect
 import sunImage from "../assets/sun.jpg";
 import planetImage from "../assets/planet.jpg";
@@ -66,7 +70,8 @@ const Ball = ({ size, heat }) => {
 
 export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
   const meshRef = useRef();
-  const planetTexture = useLoader(TextureLoader, planetImage);
+  const ringRef = useRef();
+  const planetTexture = useLoader(TextureLoader, planetImage); 
   const normalTexture = useLoader(TextureLoader, normalImage);
   const waterTexture = useLoader(TextureLoader, waterImage);
   const shaderMaterial = useMemo(() => {
@@ -88,20 +93,28 @@ export const OrbitingBall = ({ radius, size, speed, waterCoverage }) => {
   });
 
   return (
-    <mesh ref={meshRef} position={[0, 0, 0]}>
-      <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
-      <primitive object={shaderMaterial} attach="material" />
-    </mesh>
+    <>
+      {/* Orbit Path */}
+      <mesh ref={ringRef} position={[0, 0, 0]} rotation={[Math.PI/2, 0, 0]}>
+        <ringGeometry args={[radius - 0.01, radius + 0.01, 64]} /> {/* Inner and outer radius */}
+        <meshStandardMaterial color="white" side={DoubleSide} />
+      </mesh>
+      {/* Orbiting Planet */}
+      <mesh ref={meshRef} position={[0, 0, 0]}>
+        <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
+        <meshStandardMaterial map={planetTexture} normalMap={normalTexture} />
+      </mesh>
+    </>
   );
 };
 
 const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
   return (
     <>
-      <ambientLight intensity={0.1} />
+      <ambientLight intensity={0.5} />
       <directionalLight
-        position={[5, 5, 5]}
-        intensity={2}
+        position={[0,0,0]}
+        intensity={19}
         castShadow
         shadow-mapSize-width={1024} // Increase shadow resolution
         shadow-mapSize-height={1024} // Increase shadow resolution
@@ -116,14 +129,7 @@ const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
-      {/* Bloom effect for glowing effect */}
-      <EffectComposer>
-        <Bloom
-          intensity={1.5} // Adjust intensity for desired glow effect
-          luminanceThreshold={0.2} // Threshold for applying bloom
-          luminanceSmoothing={0.9} // Smoothing to control how much bloom is applied
-        />
-      </EffectComposer>
+      
     </>
   );
 };
