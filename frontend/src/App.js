@@ -4,18 +4,18 @@ import BallScene from "./components/ball";
 import Sidebar from "./components/sidebar";
 import "./App.css";
 function App() {
-  const [size, setSize] = useState(1); // Size of the larger ball
-  const [orbitingSize, setOrbitingSize] = useState(0.2); // Size of the smaller ball
+  const [sunSize, setSunSize] = useState(1); // sunSize of the larger ball
+  const [planetSize, setPlanetSize] = useState(0.2); // sunSize of the smaller ball
   const [orbitRadius, setOrbitRadius] = useState(2); // Orbit radius
   const [orbitSpeed, setOrbitSpeed] = useState(0.5); // Speed of orbiting ball
   const [heat, setHeat] = useState(0); // Heat level for color change of the sun
 
-  const handleSizeChange = (event) => {
-    setSize(event.target.value);
+  const handleSunSizeChange = (event) => {
+    setSunSize(event.target.value);
   };
 
-  const handleOrbitingSizeChange = (event) => {
-    setOrbitingSize(event.target.value);
+  const handlePlanetSizeChange = (event) => {
+    setPlanetSize(event.target.value);
   };
 
   const handleOrbitRadiusChange = (event) => {
