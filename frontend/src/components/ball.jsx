@@ -72,7 +72,6 @@ const Ball = ({ size, heat }) => {
           emissive={interpolateColor(Math.max(0, heat))} 
           emissiveIntensity={Math.min(0.3, Math.max(0, heat) * 0.001)} 
         />
-
       </mesh>
     </>
   );
@@ -147,29 +146,38 @@ export const OrbitingBall = ({
     const baseLineCount =
       magnetosphere === 10 ? 2 : Math.floor(magnetosphere / 10); // More lines for weak field
     const lineColor = magnetosphere === 10 ? 0x66ffff : 0x00ffff; // Brighter color for weak fields
-
+    const n = 4;
     for (let i = 0; i < baseLineCount; i++) {
-      const lineRadius = size + (i + 1) * 0.5;
-      const curve = new THREE.EllipseCurve(
-        0,
-        0,
-        lineRadius,
-        lineRadius * 0.8,
-        0,
-        2 * Math.PI,
-        false,
-        Math.random() * Math.PI
-      );
-      const points = curve.getPoints(50);
-      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      for (let j = 0; j < n * 2; j++) {
+        const lineRadius = size + (i + 1) * 0.5;
+        const curve = new THREE.EllipseCurve(
+          0,
+          lineRadius * 0.8,
+          lineRadius,
+          lineRadius * 0.8,
+          0,
+          2 * Math.PI,
+          false,
+          0
+          // Math.random() * Math.PI
+        );
+        const points = curve.getPoints(50);
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        geometry.rotateX((j / n) * Math.PI);
+        geometry.rotateZ(Math.PI / 2);
+        geometry.rotateZ(Math.PI / 16);
 
-      lines.push(
-        <line key={i}>
-          <bufferGeometry attach="geometry" {...geometry} />
-          <lineBasicMaterial color={lineColor} linewidth={baseLineWidth} />{" "}
-          {/* Adjusted line thickness and color */}
-        </line>
-      );
+        lines.push(
+          <line key={i}>
+            <bufferGeometry attach="geometry" {...geometry} />
+            <lineBasicMaterial
+              color={lineColor}
+              linewidth={baseLineWidth}
+            />{" "}
+            {/* Adjusted line thickness and color */}
+          </line>
+        );
+      }
     }
     return lines;
   };
@@ -187,7 +195,10 @@ export const OrbitingBall = ({
 };
 
 export const OrbitingBall2 = ({
+  majorRadius,
+  minorRadius,
   size,
+  speed,
   waterCoverage,
   atmosphere,
   magnetosphere,
@@ -228,29 +239,38 @@ export const OrbitingBall2 = ({
     const baseLineCount =
       magnetosphere === 10 ? 2 : Math.floor(magnetosphere / 10); // More lines for weak field
     const lineColor = magnetosphere === 10 ? 0x66ffff : 0x00ffff; // Brighter color for weak fields
-
+    const n = 4;
     for (let i = 0; i < baseLineCount; i++) {
-      const lineRadius = size + (i + 1) * 0.5;
-      const curve = new THREE.EllipseCurve(
-        0,
-        0,
-        lineRadius,
-        lineRadius * 0.8,
-        0,
-        2 * Math.PI,
-        false,
-        Math.random() * Math.PI
-      );
-      const points = curve.getPoints(50);
-      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      for (let j = 0; j < n * 2; j++) {
+        const lineRadius = size + (i + 1) * 0.5;
+        const curve = new THREE.EllipseCurve(
+          0,
+          lineRadius * 0.8,
+          lineRadius,
+          lineRadius * 0.8,
+          0,
+          2 * Math.PI,
+          false,
+          0
+          // Math.random() * Math.PI
+        );
+        const points = curve.getPoints(50);
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        geometry.rotateX((j / n) * Math.PI);
+        geometry.rotateZ(Math.PI / 2);
+        geometry.rotateZ(Math.PI / 16);
 
-      lines.push(
-        <line key={i}>
-          <bufferGeometry attach="geometry" {...geometry} />
-          <lineBasicMaterial color={lineColor} linewidth={baseLineWidth} />{" "}
-          {/* Adjusted line thickness and color */}
-        </line>
-      );
+        lines.push(
+          <line key={i}>
+            <bufferGeometry attach="geometry" {...geometry} />
+            <lineBasicMaterial
+              color={lineColor}
+              linewidth={baseLineWidth}
+            />{" "}
+            {/* Adjusted line thickness and color */}
+          </line>
+        );
+      }
     }
     return lines;
   };
