@@ -35,10 +35,31 @@ function App() {
     setHeat(event.target.value);
   };
 
-  const Home = () => <h1>Home Page</h1>;
-  const About = () => <h1>About Page</h1>;
-  const Sources = () => <h1>Sources & References</h1>;
-  const NotFoundPage = () => <h1>404 - Page Not Found</h1>;
+  const handleOrbitChange = (e) => {
+    const { name, value } = e.target;
+    let change = 0;
+    if (name == "orbitSpeed") {
+      change = value - orbit.orbitSpeed;
+    }
+    setOrbit({
+      ...orbit,
+      [name]: value,
+    });
+
+    if (change != 0) {
+      angleChange += 0.001 * change;
+      console.log(angleChange);
+      //animate();
+    }
+  };
+
+  const handleSunChange = (e) => {
+    const { name, value } = e.target;
+    setSun({
+      ...sun,
+      [name]: value,
+    });
+  };
 
   return (
     <>
