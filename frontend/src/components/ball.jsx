@@ -50,7 +50,7 @@ void main() {
 }
 `;
 
-const orbitOffset = 0.5;
+const orbitOffset = 0.3;
 
 const Ball = ({ size, heat }) => {
   const meshRef = useRef();
