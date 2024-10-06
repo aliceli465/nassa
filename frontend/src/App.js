@@ -5,7 +5,11 @@ import Sidebar from "./components/sidebar";
 import Result from "./components/Result";
 import "./App.css";
 import About from "./pages/about";
+import Sources from "./pages/sources";
+import NotFound from "./pages/notfound";
 // import { ReactDOM } from "react-dom/client";
+import Sources from "./pages/sources";
+import NotFound from "./pages/notfound";
 
 import {
   BrowserRouter,
@@ -30,6 +34,7 @@ function Index() {
               <Route exact path="/" element={<App />} />
               <Route path="/About" element={<About />} />
               <Route path="/sources" element={<Sources />} />
+              <Route path="*" element={<NotFound />} />
               {/* Catch-all route */}
             </Routes>
           </div>
