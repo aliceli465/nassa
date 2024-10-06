@@ -1,5 +1,5 @@
 // src/Ball.js
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { interpolateColor } from "../utils/colorUtils";
@@ -26,6 +26,7 @@ const fragmentShader = `
 uniform sampler2D baseTexture;
 uniform sampler2D waterTexture;
 uniform float coverage;
+uniform float opacity;
 varying vec2 vUv;
 
 // Function to generate pseudo-random numbers based on coordinates
@@ -43,7 +44,9 @@ void main() {
   // Determine the blend based on the coverage value and noise
   float blend = smoothstep(0.0, 1.0, (noise - (1.0 - coverage)) * (1.0 / coverage));
 
-  gl_FragColor = mix(baseColor, waterColor, blend);
+  vec4 mixedColor = mix(baseColor, waterColor, blend);
+  gl_FragColor = vec4(mixedColor.rgb, mixedColor.a * opacity); // Multiply by opacity to adjust alpha
+
 }
 `;
 
@@ -65,13 +68,29 @@ const Ball = ({ size, heat }) => {
     </>
   );
 };
-
+const getOpacityFromAtmosphere = (atmosphere) => {
+  switch (atmosphere) {
+    case 0:
+      return 1;
+    case 25:
+      return 0.7;
+    case 50:
+      return 0.5;
+    case 75:
+      return 0.4;
+    case 100:
+      return 0.2;
+    default:
+      return 1; // Fallback value if needed
+  }
+};
 export const OrbitingBall = ({
   radius,
   size,
   speed,
   waterCoverage,
   atmosphere,
+  magnetosphere,
 }) => {
   const meshRef = useRef();
   const ringRef = useRef();
@@ -81,6 +100,8 @@ export const OrbitingBall = ({
   const atmosphereTexture = useLoader(TextureLoader, atmosImage);
 
   const shaderMaterial = useMemo(() => {
+    const opacity = getOpacityFromAtmosphere(atmosphere);
+    console.log("opacity is: ", opacity);
     return new THREE.ShaderMaterial({
       vertexShader,
       fragmentShader,
@@ -89,7 +110,9 @@ export const OrbitingBall = ({
         waterTexture: { value: waterTexture },
         coverage: { value: waterCoverage / 100 }, // Normalize the coverage value
         coverageAtmosphere: { value: atmosphere / 100 },
+        opacity: { value: opacity }, // Add opacity as a uniform
       },
+      transparent: true,
     });
   }, [
     planetTexture,
@@ -106,18 +129,50 @@ export const OrbitingBall = ({
     meshRef.current.position.z = radius * Math.sin(time * speed);
   });
 
+  const createMagneticRings = () => {
+    const lines = [];
+    const baseLineWidth = magnetosphere === 10 ? 1 : 0.5; // Increase thickness for weak fields
+    const baseLineCount =
+      magnetosphere === 10 ? 2 : Math.floor(magnetosphere / 10); // More lines for weak field
+    const lineColor = magnetosphere === 10 ? 0x66ffff : 0x00ffff; // Brighter color for weak fields
+
+    for (let i = 0; i < baseLineCount; i++) {
+      const lineRadius = size + (i + 1) * 0.5;
+      const curve = new THREE.EllipseCurve(
+        0,
+        0,
+        lineRadius,
+        lineRadius * 0.8,
+        0,
+        2 * Math.PI,
+        false,
+        Math.random() * Math.PI
+      );
+      const points = curve.getPoints(50);
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+      lines.push(
+        <line key={i}>
+          <bufferGeometry attach="geometry" {...geometry} />
+          <lineBasicMaterial color={lineColor} linewidth={baseLineWidth} />{" "}
+          {/* Adjusted line thickness and color */}
+        </line>
+      );
+    }
+    return lines;
+  };
   return (
     <>
       {/* Orbit Path */}
       <mesh ref={ringRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <ringGeometry args={[radius - 0.01, radius + 0.01, 64]} />{" "}
-        {/* Inner and outer radius */}
         <meshStandardMaterial color="white" side={DoubleSide} />
       </mesh>
-      {/* Orbiting Planet */}
+      {/* Orbiting Planet  + rings*/}
       <mesh ref={meshRef} position={[0, 0, 0]}>
         <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
         <primitive object={shaderMaterial} attach="material" />{" "}
+        {createMagneticRings()}
       </mesh>
     </>
   );
@@ -130,6 +185,8 @@ const Scene = ({
   orbitSpeed,
   heat,
   waterCoverage,
+  atmosphere,
+  magnetosphere,
 }) => {
   return (
     <>
@@ -148,6 +205,8 @@ const Scene = ({
         size={planetSize}
         speed={orbitSpeed}
         waterCoverage={waterCoverage}
+        atmosphere={atmosphere}
+        magnetosphere={magnetosphere}
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
@@ -162,6 +221,8 @@ export default function BallScene({
   orbitSpeed,
   heat,
   waterCoverage,
+  atmosphere,
+  magnetosphere,
 }) {
   return (
     <div style={{ marginTop: "100px" }}>
@@ -173,6 +234,8 @@ export default function BallScene({
           orbitSpeed={orbitSpeed}
           heat={heat}
           waterCoverage={waterCoverage}
+          atmosphere={atmosphere}
+          magnetosphere={magnetosphere}
         />
       </Canvas>
     </div>

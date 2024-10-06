@@ -8,8 +8,6 @@ import About from "./pages/about";
 import Sources from "./pages/sources";
 import NotFound from "./pages/notfound";
 // import { ReactDOM } from "react-dom/client";
-import Sources from "./pages/sources";
-import NotFound from "./pages/notfound";
 
 import {
   BrowserRouter,
@@ -122,9 +120,9 @@ function App() {
             heat={heat}
           />
         </div>
-        <div style={{ marginLeft: "5%", width: "300px" }}>
+        {/* <div style={{ marginLeft: "5%", width: "300px" }}>
           <Result habitability={habitability} />
-        </div>
+        </div> */}
         <div style={{ flexGrow: 1 }}>
           <BallScene
             sunSize={sunSize}
@@ -133,6 +131,8 @@ function App() {
             orbitSpeed={orbitSpeed}
             heat={heat}
             waterCoverage={waterCoverage}
+            atmosphere={atmosphere}
+            magnetosphere={magnetosphere}
           />
         </div>
       </div>

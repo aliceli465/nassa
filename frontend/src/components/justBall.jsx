@@ -14,9 +14,8 @@ const atmosphereLabels = {
 const magnetosphereLabels = {
   0: "None",
   10: "Weak",
-  20: "Normal",
+  30: "Normal",
   40: "Strong",
-  60: "Very Strong",
 };
 const OrbitingBallModal = ({
   radius,
@@ -64,6 +63,8 @@ const OrbitingBallModal = ({
                 size={size}
                 speed={speed}
                 waterCoverage={waterCoverage}
+                atmosphere={atmosphere}
+                magnetosphere={magnetosphere}
               />
               <OrbitControls /> {/* Add OrbitControls here */}
             </Canvas>
@@ -79,7 +80,6 @@ const OrbitingBallModal = ({
                 id="waterCoverage"
                 value={waterCoverage}
                 onChange={(e) => setWaterCoverage(Number(e.target.value))}
-                style={{ marginLeft: "10px" }}
               >
                 <option value={0}>0</option>
                 <option value={25}>25</option>
@@ -89,14 +89,13 @@ const OrbitingBallModal = ({
               </select>
             </div>
             <div style={{ margin: "1rem 0" }}>
-              <label htmlFor="temperature">
-                Temperature: {temperature}000 Celsius
-              </label>
+              <label htmlFor="temperature">Temperature: {temperature}°C</label>
               <input
                 id="temperature"
                 type="range"
                 min={0}
-                max={10}
+                max={100}
+                step={5}
                 value={temperature}
                 onChange={(e) => setTemperature(Number(e.target.value))}
                 style={{ width: "40%" }}
@@ -110,12 +109,12 @@ const OrbitingBallModal = ({
                 id="atmosphere"
                 value={atmosphere}
                 onChange={(e) => setAtmosphere(Number(e.target.value))}
-                style={{ marginLeft: "10px" }}
               >
-                <option value={10}>Light</option>
-                <option value={25}>Normal</option>
-                <option value={40}>Thick</option>
-                <option value={60}>Very Thick</option>
+                <option value={0}>None</option>
+                <option value={25}>Light</option>
+                <option value={50}>Normal</option>
+                <option value={75}>Thick</option>
+                <option value={100}>Very Thick</option>
               </select>
             </div>
             <div style={{ margin: "1rem 0" }}>
@@ -167,19 +166,17 @@ const OrbitingBallModal = ({
               </div>
               <div style={{ margin: "1rem 0" }}>
                 <label htmlFor="Magnetosphere">
-                  Magnetosphere: {atmosphereLabels[atmosphere] || "__"}
+                  Magnetosphere: {magnetosphereLabels[magnetosphere] || "__"}
                 </label>
                 <select
                   id="magnetosphere"
                   value={magnetosphere}
                   onChange={(e) => setMagnetosphere(Number(e.target.value))}
-                  style={{ marginLeft: "10px" }}
                 >
                   <option value={0}>None</option>
                   <option value={10}>Weak</option>
-                  <option value={20}>Normal</option>
+                  <option value={30}>Normal</option>
                   <option value={40}>Strong</option>
-                  <option value={60}>Very Strong</option>
                 </select>
               </div>
             </div>
