@@ -117,10 +117,10 @@ button:hover {
   font-family: "Roboto", sans-serif;
   font-size: 15px;
   color: #ffffff;
-  z-index: 2
+  z-index: 2;
 }
 
-.pInfoBox{
+.pInfoBox {
   width: 15%;
   left: 20%;
   text-align: center;
@@ -130,7 +130,7 @@ button:hover {
   font-family: "Roboto", sans-serif;
   font-size: 15px;
   color: #ffffff;
-  z-index: 1
+  z-index: 1;
 }
 
 .info {
@@ -156,10 +156,10 @@ button:hover {
   font-family: "Roboto", sans-serif;
   font-size: 15px;
   color: #ffffff;
-  z-index: 1
+  z-index: 1;
 }
 
-.pInfoBox{
+.pInfoBox {
   width: 15%;
   left: 21%;
   text-align: center;
@@ -169,7 +169,7 @@ button:hover {
   font-family: "Roboto", sans-serif;
   font-size: 15px;
   color: #ffffff;
-  z-index: 1
+  z-index: 1;
 }
 
 h2 {
@@ -247,7 +247,8 @@ input[type="number"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensures it appears on top */
+  /* Ensures it appears on top */
+  z-index: 1000;
 }
 
 .modal-content {
@@ -257,6 +258,8 @@ input[type="number"] {
   border-radius: 10px;
   padding: 20px;
   position: relative;
+  z-index: 1000;
+  color: black;
 }
 
 /* App.css */
@@ -268,11 +271,11 @@ input[type="number"] {
   border: none; /* Remove border */
   border-radius: 4px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Transition for hover effect */
+  transition: transform 0.2s ease; /* Transition for hover effect */
 }
 
 .close-button:hover {
-  background-color: #921f1f; /* Darker red on hover */
+  transform: scale(1.1); /* Darker red on hover */
 }
 
 /* App.css */
@@ -334,4 +337,113 @@ input[type="number"] {
 .sidebar .label {
   margin-top: 5px;
   text-align: center;
+}
+
+.planetRemote {
+  display: inline-block;
+  padding: 15px;
+  background-color: rgb(111, 107, 107);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  margin-right: 150px;
+}
+
+.planetRemote input[type="range"] {
+  -webkit-appearance: none; /* Remove default styles */
+  background-color: #474343; /* Darker background for select and input */
+
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.planetRemote select,
+.planetRemote input[type="range"] {
+  font-family: "Orbitron", sans-serif;
+  background-color: #474343; /* Darker background for select and input */
+  border: 1px solid #474343; /* Slightly lighter border */
+  color: white; /* Text color for input */
+  border-radius: 5px; /* Rounded corners */
+  padding: 0; /* Removed padding */
+  /* margin-top: 5px; */ /* Removed margin */
+}
+
+.planetRemote label {
+  font-weight: bold;
+  margin-bottom: 0; /* Removed margin */
+}
+/* For Webkit browsers (Chrome, Safari) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default styling */
+  height: 20px; /* Set the height of the thumb */
+  width: 20px; /* Set the width of the thumb */
+  background-color: white; /* Change the thumb color to red */
+  border-radius: 50%; /* Optional: make it circular */
+  cursor: pointer; /* Change the cursor to pointer */
+}
+.sidebar.right {
+  background: linear-gradient(180deg, #0d0b1d 0%, #2c2a4b 100%);
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  width: 300px;
+  height: auto;
+  position: absolute;
+  right: 5%;
+  z-index: 1;
+}
+
+.about-container {
+  background-color: #0d1b2a; /* Deep space blue */
+  color: #ffffff; /* White text */
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  padding: 50px;
+  border-radius: 10px;
+  margin: 0 auto;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.about-title {
+  font-size: 2.5em;
+  color: #ffcc00; /* Golden yellow to pop */
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.about-description {
+  font-size: 1.2em;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  color: #b0c4de; /* Light steel blue */
+}
+
+.about-image-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.about-image {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Shadow for the image */
+}
+
+.about-button {
+  padding: 15px 30px;
+  font-size: 1.1em;
+  background-color: #ffcc00; /* Same golden yellow */
+  color: #0d1b2a; /* Deep space blue for contrast */
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.about-button:hover {
+  background-color: #ffaa00; /* Darker gold on hover */
+}
+
+.about-button:active {
+  background-color: #e69500; /* Even darker on click */
 }
