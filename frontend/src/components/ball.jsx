@@ -14,7 +14,7 @@ const Ball = ({ size, heat }) => {
   });
   return (
     <>
-      <mesh ref={meshRef} castShadow receiveShadow>
+      <mesh ref={meshRef} castShadow receiveShadow position={[0,0,0]}>
         <sphereGeometry args={[size, 32, 32]} />
         <meshStandardMaterial />
       </mesh>
@@ -22,7 +22,7 @@ const Ball = ({ size, heat }) => {
   );
 };
 
-const OrbitingBall = ({ radius, size, speed }) => {
+const OrbitingBall = ({ radius, size, speed, tilt}) => {
   const meshRef = useRef();
 
   useFrame(({ clock }) => {
@@ -30,10 +30,14 @@ const OrbitingBall = ({ radius, size, speed }) => {
     // Adjust position based on the radius for orbit
     meshRef.current.position.x = radius * Math.cos(time * speed);
     meshRef.current.position.z = radius * Math.sin(time * speed);
+
+    meshRef.current.rotation.x = tilt * Math.PI; // Tilt between 0 and PI radians
+    meshRef.current.rotation.y = time * 2; // Spin on Y-axis
+    meshRef.current.rotation.z = tilt * Math.PI; // Additional tilt for visibility
   });
 
   return (
-    <mesh ref={meshRef}>
+    <mesh ref={meshRef} position={[0, 0, 0]}>
       <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
       <meshStandardMaterial color="blue" />
     </mesh>
@@ -57,6 +61,7 @@ const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat }) => {
         radius={orbitRadius}
         size={planetSize}
         speed={orbitSpeed}
+        tilt = {0}
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
