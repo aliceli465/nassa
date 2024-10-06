@@ -53,7 +53,8 @@ const Ball = ({ size, heat }) => {
 
   useFrame(() => {
     // Set the color of the sun based on heat
-    meshRef.current.material.color.set(interpolateColor(heat)); // Update sun color based on heat
+    const clampedHeat = Math.max(0, heat); // Clamp heat value
+    meshRef.current.material.color.set(interpolateColor(clampedHeat));
   });
   return (
     <>
@@ -65,7 +66,13 @@ const Ball = ({ size, heat }) => {
   );
 };
 
-export const OrbitingBall = ({ radius, size, speed, waterCoverage, atmosphere }) => {
+export const OrbitingBall = ({
+  radius,
+  size,
+  speed,
+  waterCoverage,
+  atmosphere,
+}) => {
   const meshRef = useRef();
   const ringRef = useRef();
   const planetTexture = useLoader(TextureLoader, planetImage);
@@ -84,7 +91,13 @@ export const OrbitingBall = ({ radius, size, speed, waterCoverage, atmosphere })
         coverageAtmosphere: { value: atmosphere / 100 },
       },
     });
-  }, [planetTexture, waterTexture, waterCoverage, atmosphere, atmosphereTexture]);
+  }, [
+    planetTexture,
+    waterTexture,
+    waterCoverage,
+    atmosphere,
+    atmosphereTexture,
+  ]);
 
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
@@ -110,7 +123,14 @@ export const OrbitingBall = ({ radius, size, speed, waterCoverage, atmosphere })
   );
 };
 
-const Scene = ({ sunSize, planetSize, orbitRadius, orbitSpeed, heat, waterCoverage }) => {
+const Scene = ({
+  sunSize,
+  planetSize,
+  orbitRadius,
+  orbitSpeed,
+  heat,
+  waterCoverage,
+}) => {
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -141,7 +161,7 @@ export default function BallScene({
   orbitRadius,
   orbitSpeed,
   heat,
-  waterCoverage
+  waterCoverage,
 }) {
   return (
     <div style={{ marginTop: "100px" }}>

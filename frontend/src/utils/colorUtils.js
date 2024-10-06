@@ -1,9 +1,16 @@
 import * as THREE from "three";
 
 export const interpolateColor = (value) => {
-  // Pastel yellow to red
-  const pastelYellow = new THREE.Color(0xf7f702); // Light pastel yellow
-  const red = new THREE.Color(0xff0000); // Red
+  // Ensure value is clamped between 0 and 1000
+  const clampedValue = Math.max(0, Math.min(value, 1000));
 
-  return pastelYellow.lerp(red, value);
+  // Map the clamped value to a range from 0 to 1
+  const normalizedValue = clampedValue / 1000; // Range from 0 to 1
+
+  // Create colors for yellow and blue
+  const yellow = new THREE.Color(0xffff00); // Yellow for low temperatures
+  const blue = new THREE.Color(0x0000ff); // Blue for high temperatures
+
+  // Interpolate between yellow and blue based on the normalized value
+  return yellow.lerp(blue, normalizedValue);
 };
