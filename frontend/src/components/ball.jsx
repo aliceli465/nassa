@@ -1,12 +1,17 @@
 // src/Ball.js
 import React, { useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader} from "@react-three/fiber";
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { interpolateColor } from "../utils/colorUtils";
+import { TextureLoader } from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing"; // For bloom effect
+import sunImage from "../assets/sun.jpg";
+import planetImage from "../assets/planet.jpg"; 
+import normalImage from "../assets/normal.jpg"; 
 
 const Ball = ({ size, heat }) => {
   const meshRef = useRef();
+  const sunTexture = useLoader(TextureLoader, sunImage);
 
   useFrame(() => {
     // Set the color of the sun based on heat
@@ -16,7 +21,7 @@ const Ball = ({ size, heat }) => {
     <>
       <mesh ref={meshRef} castShadow receiveShadow position={[0,0,0]}>
         <sphereGeometry args={[size, 32, 32]} />
-        <meshStandardMaterial />
+        <meshStandardMaterial map={sunTexture}/>
       </mesh>
     </>
   );
@@ -24,6 +29,8 @@ const Ball = ({ size, heat }) => {
 
 const OrbitingBall = ({ radius, size, speed, tilt}) => {
   const meshRef = useRef();
+  const planetTexture = useLoader(TextureLoader, planetImage); 
+  const normalTexture = useLoader(TextureLoader, normalImage);
 
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
@@ -39,7 +46,7 @@ const OrbitingBall = ({ radius, size, speed, tilt}) => {
   return (
     <mesh ref={meshRef} position={[0, 0, 0]}>
       <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
-      <meshStandardMaterial color="blue" />
+      <meshStandardMaterial map={planetTexture} normalMap={normalTexture} />
     </mesh>
   );
 };
