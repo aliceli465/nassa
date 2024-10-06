@@ -8,8 +8,6 @@ import About from "./pages/about"
 import Sources from "./pages/sources"
 import NotFound from "./pages/notfound"
 // import { ReactDOM } from "react-dom/client";
-import Sources from "./pages/sources"
-import NotFound from "./pages/notfound";
 
 import { BrowserRouter, BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar"; // You can omit the ".jsx" in most cases.
