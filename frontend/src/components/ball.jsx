@@ -50,6 +50,8 @@ void main() {
 }
 `;
 
+const orbitOffset = 0.3;
+
 const Ball = ({ size, heat }) => {
   const meshRef = useRef();
   const sunTexture = useLoader(TextureLoader, sunImage);
@@ -84,8 +86,45 @@ const getOpacityFromAtmosphere = (atmosphere) => {
       return 1; // Fallback value if needed
   }
 };
+
+export const getHabitability = ({
+  waterCoverage,
+  atmosphere,
+  temperature,
+  oxygen,
+  co2,
+  no,
+  albedo,
+  magnetosphere,
+  orbitRadius,
+  habitability
+}) => {
+
+  var L = (waterCoverage / 100);
+  var S = 1;
+  var E = 1;
+  var C = 2;
+  var tot = 10
+
+  S += (magnetosphere / 100)
+  S += (atmosphere / 100)
+
+  if (orbitRadius >= 2.5 && orbitRadius <= 5)
+    E += 2;
+
+  if (orbitRadius >= 5 && orbitRadius <= 10)
+    E += 1;
+
+  if (temperature >= 200000 && temperature <= 400000)
+    E += 1;
+
+  return ((S + E + C + L) ** (0.25)) / (10 ** 0.25)
+
+};
+
 export const OrbitingBall = ({
-  radius,
+  majorRadius,
+  minorRadius,
   size,
   speed,
   waterCoverage,
@@ -127,8 +166,8 @@ export const OrbitingBall = ({
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     // Adjust position based on the radius for orbit
-    meshRef.current.position.x = radius * Math.cos(time * speed);
-    meshRef.current.position.z = radius * Math.sin(time * speed);
+    meshRef.current.position.x = majorRadius * Math.cos(time * speed) + orbitOffset;
+    meshRef.current.position.z = minorRadius * Math.sin(time * speed);
   });
 
   const createMagneticRings = () => {
@@ -163,13 +202,9 @@ export const OrbitingBall = ({
     }
     return lines;
   };
+
   return (
     <>
-      {/* Orbit Path */}
-      <mesh ref={ringRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[radius - 0.01, radius + 0.01, 64]} />{" "}
-        <meshStandardMaterial color="white" side={DoubleSide} />
-      </mesh>
       {/* Orbiting Planet  + rings*/}
       <mesh ref={meshRef} position={[0, 0, 0]}>
         <sphereGeometry args={[size, 16, 16]} /> {/* Orbiting sphere size */}
@@ -183,7 +218,8 @@ export const OrbitingBall = ({
 const Scene = ({
   sunSize,
   planetSize,
-  orbitRadius,
+  majorRadius,
+  minorRadius,
   orbitSpeed,
   heat,
   waterCoverage,
@@ -191,6 +227,33 @@ const Scene = ({
   magnetosphere,
   temperature,
 }) => {
+  const createOrbitPath = (majorRadius, minorRadius) => {
+    const lines = [];
+    const lineColor = magnetosphere === 10 ? 0x66ffff : 0x00ffff;
+    const curve = new THREE.EllipseCurve(
+      orbitOffset,
+      0,
+      majorRadius,
+      minorRadius,
+      0,
+      2 * Math.PI,
+      false,
+      0
+    );
+    const points = curve.getPoints(50);
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    lines.push(
+      <group rotation={[Math.PI / 2, 0, 0]} key={`orbit-path-${majorRadius}`}>
+        <line>
+          <bufferGeometry attach="geometry" {...geometry} />
+          <lineBasicMaterial color={lineColor} linewidth={5} />{" "}
+          {/* Adjusted line thickness and color */}
+        </line>
+      </group>
+    );
+    return lines;
+  }
+
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -202,9 +265,11 @@ const Scene = ({
         shadow-mapSize-height={1024} // Increase shadow resolution
         shadow-bias={-0.001}
       />
+      {createOrbitPath(majorRadius, minorRadius)}
       <Ball size={sunSize} heat={heat} />
       <OrbitingBall
-        radius={orbitRadius}
+        majorRadius={majorRadius}
+        minorRadius={minorRadius}
         size={planetSize}
         speed={orbitSpeed}
         waterCoverage={waterCoverage}
@@ -235,7 +300,8 @@ export default function BallScene({
         <Scene
           sunSize={sunSize}
           planetSize={planetSize}
-          orbitRadius={orbitRadius}
+          majorRadius={orbitRadius * 1.5}
+          minorRadius={orbitRadius}
           orbitSpeed={orbitSpeed}
           heat={heat}
           waterCoverage={waterCoverage}

@@ -73,7 +73,7 @@ const OrbitingBallModal = ({
 
           <div className="planetRemote">
             {/* Slider for Water Coverage */}
-            <div style={{ margin: "1rem 0" }} className="slider-container">
+            <div style={{ margin: "1rem 0" }}>
               <label htmlFor="waterCoverage">
                 Water Coverage: {waterCoverage}%
               </label>
