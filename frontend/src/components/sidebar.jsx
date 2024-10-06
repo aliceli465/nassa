@@ -1,143 +1,84 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Sidebar({ sunSize, handleSunChange }) {
+function Sidebar({
+  handleSizeChange,
+  handleOrbitingSizeChange,
+  handleOrbitRadiusChange,
+  handleOrbitSpeedChange,
+  handleHeatChange,
+  size,
+  orbitingSize,
+  orbitRadius,
+  orbitSpeed,
+  heat,
+}) {
   return (
     <div className="sidebar">
-      <h2>Orbit Settings</h2>
-
-      {/* <div className="control">
-        <label htmlFor="radius">Orbital Radius (AU)</label>
-        <input
-          type="range"
-          id="radius"
-          min="10"
-          max="200"
-          value={orbit.radius}
-          name="radius"
-          onChange={handleOrbitChange}
-        />
-        <input
-          type="number"
-          value={orbit.radius}
-          name="radius"
-          onChange={handleOrbitChange}
-        />
+      <h2 className="title">Control Panel</h2>
+      <div className="slider-container">
+        <div className="slider">
+          <input
+            type="range"
+            min="0.1"
+            max="3"
+            step="0.1"
+            value={size}
+            onChange={handleSizeChange}
+            className="input"
+          />
+          <p className="label">Size of the large ball: {size}</p>
+        </div>
+        <div className="slider">
+          <input
+            type="range"
+            min="0.1"
+            max="1"
+            step="0.01"
+            value={orbitingSize}
+            onChange={handleOrbitingSizeChange}
+            className="input"
+          />
+          <p className="label">Size of the smaller ball: {orbitingSize}</p>
+        </div>
+        <div className="slider">
+          <input
+            type="range"
+            min="1"
+            max="10"
+            step="0.1"
+            value={orbitRadius}
+            onChange={handleOrbitRadiusChange}
+            className="input"
+          />
+          <p className="label">
+            Orbit Radius (Distance between balls): {orbitRadius}
+          </p>
+        </div>
+        <div className="slider">
+          <input
+            type="range"
+            min="0.1"
+            max="5"
+            step="0.1"
+            value={orbitSpeed}
+            onChange={handleOrbitSpeedChange}
+            className="input"
+          />
+          <p className="label">Orbit Speed: {orbitSpeed}</p>
+        </div>
+        <div className="slider">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={heat}
+            onChange={handleHeatChange}
+            className="input"
+          />
+          <p className="label">Heat (Color of the sun): {heat}</p>
+        </div>
       </div>
-
-      <div className="control">
-        <label htmlFor="speed">Orbital Speed (1000km/s)</label>
-        <input
-          type="range"
-          id="speed"
-          min="10"
-          max="50"
-          value={orbit.orbitSpeed}
-          name="orbitSpeed"
-          onChange={handleOrbitChange}
-        />
-        <input
-          type="number"
-          value={orbit.orbitSpeed}
-          name="orbitSpeed"
-          onChange={handleOrbitChange}
-        />
-      </div>
-
-      <div className="control">
-        <label htmlFor="tilt">Axial tilt (degrees)</label>
-        <input
-          type="range"
-          id="tilt"
-          min="1"
-          max="100"
-          value={orbit.axialTilt}
-          name="axialTilt"
-          onChange={handleOrbitChange}
-        />
-        <input
-          type="number"
-          value={orbit.axialTilt}
-          name="axialTilt"
-          onChange={handleOrbitChange}
-        />
-      </div> */}
-
-      <h2>Sun Settings</h2>
-      <div className="control">
-        <label htmlFor="sunRadius">Radius (R☉)</label>
-        <input
-          type="range"
-          id="sunRadius"
-          min="10"
-          max="200"
-          value={sunSize}
-          name="radius"
-          onChange={handleSunChange}
-        />
-        <input
-          type="number"
-          value={sunSize}
-          name="radius"
-          onChange={handleSunChange}
-        />
-      </div>
-      {/* 
-      <div className="control">
-        <label htmlFor="mass">Mass (M☉)</label>
-        <input
-          type="range"
-          id="mass"
-          min="50"
-          max="500"
-          value={sun.mass}
-          name="mass"
-          onChange={handleSunChange}
-        />
-        <input
-          type="number"
-          value={sun.mass}
-          name="mass"
-          onChange={handleSunChange}
-        />
-      </div>
-
-      <div className="control">
-        <label htmlFor="temp">Temperature (Celsius)</label>
-        <input
-          type="range"
-          id="temp"
-          min="1"
-          max="10000"
-          value={sun.temperature}
-          name="temperature"
-          onChange={handleSunChange}
-        />
-        <input
-          type="number"
-          value={sun.temperature}
-          name="temperature"
-          onChange={handleSunChange}
-        />
-      </div>
-
-      <div className="control">
-        <label htmlFor="luminosity">Luminosity (L☉)</label>
-        <input
-          type="range"
-          id="luminosity"
-          min="1"
-          max="100"
-          value={sun.luminosity}
-          name="luminosity"
-          onChange={handleSunChange}
-        />
-        <input
-          type="number"
-          value={sun.luminosity}
-          name="luminosity"
-          onChange={handleSunChange}
-        />
-      </div> */}
     </div>
   );
 }

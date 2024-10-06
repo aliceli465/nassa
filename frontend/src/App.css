@@ -211,3 +211,45 @@ input[type="number"] {
   justify-content: center;
   align-items: center;
 }
+
+/* Sidebar.css */
+
+.sidebar {
+  background: linear-gradient(180deg, #0d0b1d 0%, #2c2a4b 100%);
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  width: 300px;
+  height: auto;
+}
+
+.sidebar .title {
+  text-align: center;
+  margin: 0 0 20px;
+  font-size: 24px;
+}
+
+.sidebar .slider-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .slider {
+  margin-bottom: 15px;
+}
+
+.sidebar .input {
+  width: 100%;
+  cursor: pointer;
+  appearance: none;
+  background: #3b3b61;
+  height: 5px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.sidebar .label {
+  margin-top: 5px;
+  text-align: center;
+}

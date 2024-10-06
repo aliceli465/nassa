@@ -22,7 +22,7 @@ const Ball = ({ size, heat }) => {
   );
 };
 
-const OrbitingBall = ({ radius, size, speed, tilt }) => {
+const OrbitingBall = ({ radius, size, speed }) => {
   const meshRef = useRef();
 
   useFrame(({ clock }) => {
@@ -30,10 +30,6 @@ const OrbitingBall = ({ radius, size, speed, tilt }) => {
     // Adjust position based on the radius for orbit
     meshRef.current.position.x = radius * Math.cos(time * speed);
     meshRef.current.position.z = radius * Math.sin(time * speed);
-
-    meshRef.current.rotation.x = tilt * Math.PI; // Tilt between 0 and PI radians
-    meshRef.current.rotation.y = time * 2; // Spin on Y-axis
-    meshRef.current.rotation.z = tilt * Math.PI; // Additional tilt for visibility
   });
 
   return (
@@ -44,17 +40,23 @@ const OrbitingBall = ({ radius, size, speed, tilt }) => {
   );
 };
 
-const Scene = ({ size, orbitingSize, orbitRadius, orbitSpeed, heat, tilt }) => {
+const Scene = ({ size, orbitingSize, orbitRadius, orbitSpeed, heat }) => {
   return (
     <>
       <ambientLight intensity={0.1} />
-      <directionalLight position={[5, 5, 5]} intensity={3} castShadow />
+      <directionalLight
+        position={[5, 5, 5]}
+        intensity={2}
+        castShadow
+        shadow-mapSize-width={1024} // Increase shadow resolution
+        shadow-mapSize-height={1024} // Increase shadow resolution
+        shadow-bias={-0.001}
+      />
       <Ball size={size} heat={heat} />
       <OrbitingBall
         radius={orbitRadius}
         size={orbitingSize}
         speed={orbitSpeed}
-        tilt={tilt}
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
@@ -68,7 +70,6 @@ export default function BallScene({
   orbitRadius,
   orbitSpeed,
   heat,
-  tilt,
 }) {
   return (
     <Canvas style={{ height: "400px" }}>
@@ -78,7 +79,6 @@ export default function BallScene({
         orbitRadius={orbitRadius}
         orbitSpeed={orbitSpeed}
         heat={heat}
-        tilt={tilt}
       />
     </Canvas>
   );
