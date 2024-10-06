@@ -3,10 +3,40 @@ import React, { useState } from "react";
 import BallScene from "./components/ball";
 import Sidebar from "./components/sidebar";
 import "./App.css";
+import About from "./pages/about"
+// import { ReactDOM } from "react-dom/client";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar"; // You can omit the ".jsx" in most cases.
 import OrbitingBallModal from "./components/justBall";
+
+function Index() {
+
+  const Home = () => <h1>Home Page</h1>;
+  const Sources = () => <h1>Sources & References</h1>;
+  const NotFoundPage = () => <h1>404 - Page Not Found</h1>;
+    return (
+    <>
+        <Router>
+      <div>
+          <Navbar />
+            <div style={{ padding: "2rem" }}>
+                        <h1>hi</h1>
+              <Routes>
+                <Route exact path="/" element={<App />} />
+                <Route path="/About" element={<About />} />
+                <Route path="/sources" element={<Sources />} />
+                {/* Catch-all route */}
+              </Routes>
+
+                        <h1>hi2</h1>
+            </div>
+      </div>
+        </Router>
+        </>
+    )
+}
+
 function App() {
   const [sunSize, setSunSize] = useState(1); // sunSize of the larger ball
   const [planetSize, setPlanetSize] = useState(0.2); // sunSize of the smaller ball
@@ -22,6 +52,12 @@ function App() {
   });
 
   const [waterCoverage, setWaterCoverage] = useState(0);
+  const [atmosphere, setAtmosphere] = useState(0);
+  const [temperature, setTemperature] = useState(20000);
+  const [oxygen, setOxygen] = useState(0);
+  const [co2, setCo2] = useState(0);
+  const [no, setNo] = useState(20000);
+
 
   const handleOrbitingBall = (newProps) => {
     setOrbitingBall((prevProps) => ({
@@ -50,42 +86,8 @@ function App() {
     setHeat(event.target.value);
   };
 
-  const Home = () => (
-    <div>
-      <h1>Home Page</h1>
-      <p>Welcome to the home page!</p>
-    </div>
-  );
-  const About = () => (
-    <div>
-      <h1>About Page</h1>
-      <p>Welcome to the about page!</p>
-    </div>
-  );
-  const Sources = () => (
-    <div>
-      <h1>Sources Page</h1>
-      <p>Welcome to the sources page!</p>
-    </div>
-  );
-  const NotFoundPage = () => <h1>404 - Page Not Found</h1>;
-
   return (
-    <>
-        <Router>
-          <Navbar>
-            <div style={{ padding: "2rem" }}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/sources" element={<Sources />} />
-                <Route path="*" element={<NotFoundPage />} />{" "}
-                {/* Catch-all route */}
-              </Routes>
-            </div>
-          </Navbar>
-        </Router>
-
+  <>
       <div className="button-container">
         <button onClick={() => setModalOpen(true)}>Edit my planet</button>
         <br></br>
@@ -130,10 +132,20 @@ function App() {
           setModalOpen={setModalOpen}
           waterCoverage={waterCoverage}
           setWaterCoverage={setWaterCoverage}
+          temperature={temperature}
+          setTemperature={setTemperature}
+          atmosphere={atmosphere}
+          setAtmosphere={setAtmosphere}
+          no={no}
+          setNo={setNo}
+          oxygen={oxygen}
+          setOxygen={setOxygen}
+          co2={co2}
+          setCo2={setCo2}
         />
       )}
     </>
   );
 }
 
-export default App;
+export default Index;

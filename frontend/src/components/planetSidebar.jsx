@@ -82,6 +82,25 @@ function PlanetSidebar({ planet, handleInputChange }) {
       </div>
 
       <div className="control2">
+        <label htmlFor="atmosphere">Atmosphere Thickness (%)</label>
+        <input
+          type="range"
+          id="atmosphere"
+          min="0"
+          max="100"
+          name="atmosphere" water
+          value={planet.atmosphere}
+          onChange={handleInputChange}
+        />
+        <input
+          type="number"
+          name="atmosphere"
+          value={planet.atmosphere}
+          onChange={handleInputChange}
+        />
+      </div>
+
+      <div className="control2">
         <label htmlFor="co2">CO2 (% of atmosphere)</label>
         <input
           type="range"
