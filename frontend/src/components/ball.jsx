@@ -1,18 +1,28 @@
 // src/Ball.js
 import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, useHelper } from "@react-three/drei";
+import { interpolateColor } from "../utils/colorUtils";
+import { EffectComposer, Bloom } from "@react-three/postprocessing"; // For bloom effect
 
-const Ball = ({ size }) => {
+const Ball = ({ size, heat }) => {
+  const meshRef = useRef();
+
+  useFrame(() => {
+    // Set the color of the sun based on heat
+    meshRef.current.material.color.set(interpolateColor(heat)); // Update sun color based on heat
+  });
   return (
-    <mesh>
-      <sphereGeometry args={[size, 32, 32]} />
-      <meshStandardMaterial color="orange" />
-    </mesh>
+    <>
+      <mesh ref={meshRef} castShadow receiveShadow>
+        <sphereGeometry args={[size, 32, 32]} />
+        <meshStandardMaterial />
+      </mesh>
+    </>
   );
 };
 
-const OrbitingBall = ({ radius, size, speed }) => {
+const OrbitingBall = ({ radius, size, speed, tilt }) => {
   const meshRef = useRef();
 
   useFrame(({ clock }) => {
@@ -20,6 +30,10 @@ const OrbitingBall = ({ radius, size, speed }) => {
     // Adjust position based on the radius for orbit
     meshRef.current.position.x = radius * Math.cos(time * speed);
     meshRef.current.position.z = radius * Math.sin(time * speed);
+
+    meshRef.current.rotation.x = tilt * Math.PI; // Tilt between 0 and PI radians
+    meshRef.current.rotation.y = time * 2; // Spin on Y-axis
+    meshRef.current.rotation.z = tilt * Math.PI; // Additional tilt for visibility
   });
 
   return (
@@ -30,16 +44,17 @@ const OrbitingBall = ({ radius, size, speed }) => {
   );
 };
 
-const Scene = ({ size, orbitingSize, orbitRadius, orbitSpeed }) => {
+const Scene = ({ size, orbitingSize, orbitRadius, orbitSpeed, heat, tilt }) => {
   return (
     <>
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <Ball size={size} />
+      <ambientLight intensity={0.1} />
+      <directionalLight position={[5, 5, 5]} intensity={3} castShadow />
+      <Ball size={size} heat={heat} />
       <OrbitingBall
         radius={orbitRadius}
         size={orbitingSize}
         speed={orbitSpeed}
+        tilt={tilt}
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
@@ -52,6 +67,8 @@ export default function BallScene({
   orbitingSize,
   orbitRadius,
   orbitSpeed,
+  heat,
+  tilt,
 }) {
   return (
     <Canvas style={{ height: "400px" }}>
@@ -60,6 +77,8 @@ export default function BallScene({
         orbitingSize={orbitingSize}
         orbitRadius={orbitRadius}
         orbitSpeed={orbitSpeed}
+        heat={heat}
+        tilt={tilt}
       />
     </Canvas>
   );
