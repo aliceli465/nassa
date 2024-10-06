@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-function Sidebar({ orbit, sun, handleOrbitChange, handleSunChange }) {
+function Sidebar({ sunSize, handleSunChange }) {
   return (
     <div className="sidebar">
       <h2>Orbit Settings</h2>
 
-      <div className="control">
+      {/* <div className="control">
         <label htmlFor="radius">Orbital Radius (AU)</label>
         <input
           type="range"
@@ -60,7 +60,7 @@ function Sidebar({ orbit, sun, handleOrbitChange, handleSunChange }) {
           name="axialTilt"
           onChange={handleOrbitChange}
         />
-      </div>
+      </div> */}
 
       <h2>Sun Settings</h2>
       <div className="control">
@@ -70,18 +70,18 @@ function Sidebar({ orbit, sun, handleOrbitChange, handleSunChange }) {
           id="sunRadius"
           min="10"
           max="200"
-          value={sun.radius}
+          value={sunSize}
           name="radius"
           onChange={handleSunChange}
         />
         <input
           type="number"
-          value={sun.radius}
+          value={sunSize}
           name="radius"
           onChange={handleSunChange}
         />
       </div>
-
+      {/* 
       <div className="control">
         <label htmlFor="mass">Mass (M☉)</label>
         <input
@@ -137,7 +137,7 @@ function Sidebar({ orbit, sun, handleOrbitChange, handleSunChange }) {
           name="luminosity"
           onChange={handleSunChange}
         />
-      </div>
+      </div> */}
     </div>
   );
 }
