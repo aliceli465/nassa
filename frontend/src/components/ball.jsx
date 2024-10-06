@@ -140,21 +140,26 @@ export const OrbitingBall = ({
     const baseLineCount =
       magnetosphere === 10 ? 2 : Math.floor(magnetosphere / 10); // More lines for weak field
     const lineColor = magnetosphere === 10 ? 0x66ffff : 0x00ffff; // Brighter color for weak fields
-
+    const n = 4;
     for (let i = 0; i < baseLineCount; i++) {
+      for (let j = 0; j < n*2; j++) {
       const lineRadius = size + (i + 1) * 0.5;
       const curve = new THREE.EllipseCurve(
         0,
-        0,
+        lineRadius*.8,
         lineRadius,
         lineRadius * 0.8,
         0,
         2 * Math.PI,
         false,
-        Math.random() * Math.PI
+        0
+        // Math.random() * Math.PI
       );
       const points = curve.getPoints(50);
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      geometry.rotateX(j / n * Math.PI);
+      geometry.rotateZ(Math.PI/2);
+      geometry.rotateZ(Math.PI/16);
 
       lines.push(
         <line key={i}>
@@ -163,6 +168,7 @@ export const OrbitingBall = ({
           {/* Adjusted line thickness and color */}
         </line>
       );
+        }
     }
     return lines;
   };
