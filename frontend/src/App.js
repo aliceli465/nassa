@@ -61,6 +61,32 @@ function App() {
   const [magnetosphere, setMagnetosphere] = useState(0);
   const [habitability] = useState(0);
 
+  //habitability function
+  const getHabitability = ({
+    waterCoverage,
+    atmosphere,
+    temperature,
+    magnetosphere,
+    orbitRadius,
+  }) => {
+    var L = waterCoverage / 100;
+    var S = 1;
+    var E = 1;
+    var C = 2;
+    var tot = 10;
+
+    S += magnetosphere / 100;
+    S += atmosphere / 100;
+
+    if (orbitRadius >= 2.5 && orbitRadius <= 5) E += 2;
+
+    if (orbitRadius >= 5 && orbitRadius <= 10) E += 1;
+
+    if (temperature >= 200000 && temperature <= 400000) E += 1;
+
+    return (S + E + C + L) ** 0.25 / 10 ** 0.25;
+  };
+
   const handleSunSizeChange = (event) => {
     setSunSize(event.target.value);
   };
@@ -121,7 +147,6 @@ function App() {
             waterCoverage={waterCoverage}
             atmosphere={atmosphere}
             magnetosphere={magnetosphere}
-            temperature={temperature}
           />
         </div>
       </div>

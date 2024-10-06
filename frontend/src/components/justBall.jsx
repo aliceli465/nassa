@@ -65,7 +65,6 @@ const OrbitingBallModal = ({
                 waterCoverage={waterCoverage}
                 atmosphere={atmosphere}
                 magnetosphere={magnetosphere}
-                temperature={temperature}
               />
               <OrbitControls /> {/* Add OrbitControls here */}
             </Canvas>

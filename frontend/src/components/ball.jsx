@@ -87,41 +87,6 @@ const getOpacityFromAtmosphere = (atmosphere) => {
   }
 };
 
-export const getHabitability = ({
-  waterCoverage,
-  atmosphere,
-  temperature,
-  oxygen,
-  co2,
-  no,
-  albedo,
-  magnetosphere,
-  orbitRadius,
-  habitability
-}) => {
-
-  var L = (waterCoverage / 100);
-  var S = 1;
-  var E = 1;
-  var C = 2;
-  var tot = 10
-
-  S += (magnetosphere / 100)
-  S += (atmosphere / 100)
-
-  if (orbitRadius >= 2.5 && orbitRadius <= 5)
-    E += 2;
-
-  if (orbitRadius >= 5 && orbitRadius <= 10)
-    E += 1;
-
-  if (temperature >= 200000 && temperature <= 400000)
-    E += 1;
-
-  return ((S + E + C + L) ** (0.25)) / (10 ** 0.25)
-
-};
-
 export const OrbitingBall = ({
   majorRadius,
   minorRadius,
@@ -130,7 +95,6 @@ export const OrbitingBall = ({
   waterCoverage,
   atmosphere,
   magnetosphere,
-  temperature,
 }) => {
   const meshRef = useRef();
   const ringRef = useRef();
@@ -138,7 +102,6 @@ export const OrbitingBall = ({
   const normalTexture = useLoader(TextureLoader, normalImage);
   const waterTexture = useLoader(TextureLoader, waterImage);
   const atmosphereTexture = useLoader(TextureLoader, atmosImage);
-  const color = interpolate2(temperature);
 
   const shaderMaterial = useMemo(() => {
     const opacity = getOpacityFromAtmosphere(atmosphere);
@@ -166,7 +129,8 @@ export const OrbitingBall = ({
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     // Adjust position based on the radius for orbit
-    meshRef.current.position.x = majorRadius * Math.cos(time * speed) + orbitOffset;
+    meshRef.current.position.x =
+      majorRadius * Math.cos(time * speed) + orbitOffset;
     meshRef.current.position.z = minorRadius * Math.sin(time * speed);
   });
 
@@ -225,7 +189,6 @@ const Scene = ({
   waterCoverage,
   atmosphere,
   magnetosphere,
-  temperature,
 }) => {
   const createOrbitPath = (majorRadius, minorRadius) => {
     const lines = [];
@@ -252,7 +215,7 @@ const Scene = ({
       </group>
     );
     return lines;
-  }
+  };
 
   return (
     <>
@@ -275,7 +238,6 @@ const Scene = ({
         waterCoverage={waterCoverage}
         atmosphere={atmosphere}
         magnetosphere={magnetosphere}
-        temperature={temperature}
       />{" "}
       {/* Adjust orbitRadius */}
       <OrbitControls />
@@ -292,7 +254,6 @@ export default function BallScene({
   waterCoverage,
   atmosphere,
   magnetosphere,
-  temperature,
 }) {
   return (
     <div style={{ marginTop: "100px" }}>
@@ -307,7 +268,6 @@ export default function BallScene({
           waterCoverage={waterCoverage}
           atmosphere={atmosphere}
           magnetosphere={magnetosphere}
-          temperature={temperature}
         />
       </Canvas>
     </div>
